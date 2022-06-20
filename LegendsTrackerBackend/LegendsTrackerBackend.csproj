@@ -1,0 +1,34 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+    <DockerfileContext>..\LegendsTracker</DockerfileContext>
+    <UserSecretsId>7a83ccc1-d6d5-4e39-98e1-c9bb6f686226</UserSecretsId>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Worker\**" />
+    <Content Remove="Worker\**" />
+    <EmbeddedResource Remove="Worker\**" />
+    <None Remove="Worker\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Camille.RiotGames" Version="3.0.0-nightly-2022-05-26-9fe967ddf9" />
+    <PackageReference Include="EntityFramework" Version="6.4.4" />
+    <PackageReference Include="Hangfire" Version="1.7.30" />
+    <PackageReference Include="Hangfire.Storage.SQLite" Version="0.3.2" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="6.0.6" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="6.0.6">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="6.0.6" />
+    <PackageReference Include="Microsoft.Extensions.Hosting.WindowsServices" Version="6.0.0" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.3.1" />
+  </ItemGroup>
+
+</Project>
