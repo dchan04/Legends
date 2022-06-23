@@ -1,7 +1,10 @@
-﻿namespace LegendsTrackerBackend.Services
+﻿using Camille.RiotGames;
+using Camille.RiotGames.TftLeagueV1;
+
+namespace LegendsTrackerBackend.Services
 {
     public interface IRiotDataService
     {
-        void GetApiData();
+        Task GetApiData();
     }
 }

@@ -24,11 +24,14 @@ namespace LegendsTrackerBackend
             services.AddHangfireServer();
             services.AddScoped<IRiotDataService, RiotDataService>();
             services.AddLogging();
-            services.AddCors(options =>
+            services.AddCors(setupAction: options =>
             {
                 options.AddPolicy("CORSPolicy", configurePolicy: builder =>
                 {
-                    builder.AllowAnyMethod().AllowAnyHeader().WithOrigins(origins: "https://localhost:3000");
+                    builder
+                    .AllowAnyMethod()
+                    .AllowAnyHeader()
+                    .WithOrigins(origins: "https://localhost:3000");
                 });
             });
             services.AddEndpointsApiExplorer();
@@ -63,9 +66,9 @@ namespace LegendsTrackerBackend
             app.UseRouting();
             app.UseEndpoints(endpoint =>
             {
-                endpoint.MapGet("get-all-legends", handler: async () => await LegendsRepository.GetLegendsAsync()).WithName("Legends endpoint");
+                endpoint.MapGet("get-all-species", handler: async () => await LegendsRepository.GetSpeciesAsync()).WithName("Legends endpoint");
             });
-
+            
             BackgroundJob.Enqueue(() => serviceProvider.GetService<IRiotDataService>()!.GetApiData());
             app.UseHangfireDashboard();
         }

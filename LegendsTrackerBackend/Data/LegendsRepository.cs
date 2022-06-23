@@ -4,20 +4,20 @@ namespace LegendsTrackerBackend.Data
 {
     internal static class LegendsRepository
     {
-        internal async static Task<List<Legends>> GetLegendsAsync()
+        internal async static Task<List<Species>> GetSpeciesAsync()
         {
             using (var db = new LegendsDBContext())
             {
-                return await db.Legends.ToListAsync();
+                return await db.species.OrderBy(c => c.speciesName).ToListAsync();
             }
         }
 
-        internal async static Task<Legends> GetLegendsByIdAsync(int legendId)
+        internal async static Task<Species> GetSpeciesByIdAsync(int id)
         {
             using (var db = new LegendsDBContext())
             {
-                return await db.Legends
-                    .FirstOrDefaultAsync(predicate: Legends => Legends.LegendID == legendId);
+                return await db.species
+                    .FirstOrDefaultAsync(predicate: Species => Species.speciesId == id);
             }
         }
 

@@ -1,18 +1,18 @@
 import React, { Component, useEffect, useState } from 'react';
 
 export default function App() {
-    const [legends, setLegends] = useState([]);
+    const [species, setspecies] = useState([]);
 
     useEffect(() => {
         (async () => {
-            const url = "https://localhost:7150/get-all-legends";
+            const url = "https://localhost:7150/get-all-species";
             fetch(url, {
                 method: 'GET'
             })
                 .then(Response => Response.json())
-                .then(legendsFromServer => {
-                    console.log(legendsFromServer);
-                    setLegends(legendsFromServer);
+                .then(speciesFromServer => {
+                    console.log(speciesFromServer);
+                    setspecies(speciesFromServer);
                 })
                 .catch((error) => {
                     console.log(error);
@@ -26,13 +26,13 @@ export default function App() {
             <div className="row min-vh-100">
                 <div className="col d-flex flex-column justify-content-center align-items-center">
                     <h1>Hello this is a test</h1>
-                    {legends.length > 0 && renderLegendsTable()}
+                    {species.length > 0 && renderspeciesTable()}
                 </div>
             </div>
         </div>
     );
 
-    function renderLegendsTable() {
+    function renderspeciesTable() {
         return (
             <div className="table-responsive mt-5">
                 <table className="table table-bordered border-dark">
@@ -45,12 +45,11 @@ export default function App() {
                         </tr>
                     </thead>
                     <tbody>
-                        {legends.map((legend) => (
-                            <tr key={legend.legendId}>
-                                <td><img src={legend.imgPath} width={75} height={50}/></td>
-                                <td> {legend.name} </td>
-                                <td> {legend.species} </td>
-                                <td> Level {legend.level} </td>
+                        {species.map((species) => (
+                            <tr key={species.id}>
+                                <td><img src={species.defaultImg} width={75} height={50}/></td>
+                                <td> {species.speciesName} </td>
+                                <td> {species.speciesId} </td>
                             </tr>
                         ))}
                     </tbody>
