@@ -17,7 +17,7 @@ namespace LegendsTrackerBackend.Data
             using (var db = new LegendsDBContext())
             {
                 return await db.species
-                    .FirstOrDefaultAsync(predicate: Species => Species.speciesId == id);
+                    .FirstOrDefaultAsync(predicate: Species => Species.speciesCode == id);
             }
         }
 

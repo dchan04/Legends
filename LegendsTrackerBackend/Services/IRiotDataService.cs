@@ -5,6 +5,7 @@ namespace LegendsTrackerBackend.Services
 {
     public interface IRiotDataService
     {
-        Task GetApiData();
+        public Task GetApiData();
     }
 }
+ 

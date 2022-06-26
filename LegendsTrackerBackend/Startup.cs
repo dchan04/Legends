@@ -31,7 +31,7 @@ namespace LegendsTrackerBackend
                     builder
                     .AllowAnyMethod()
                     .AllowAnyHeader()
-                    .WithOrigins(origins: "https://localhost:3000");
+                    .WithOrigins(origins: "http://localhost:3000");
                 });
             });
             services.AddEndpointsApiExplorer();

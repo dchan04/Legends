@@ -2,12 +2,11 @@
 using Camille.Enums;
 using Camille.RiotGames;
 using Camille.RiotGames.TftLeagueV1;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 using LegendsTrackerBackend.Data;
 using Microsoft.EntityFrameworkCore;
-using System.Data.Entity;
-using System.Net;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+
 
 namespace LegendsTrackerBackend.Services
 {
@@ -21,7 +20,7 @@ namespace LegendsTrackerBackend.Services
             this.logger = logger;
         }
 
-        public Task GetApiData()
+        public  Task GetApiData()
         {
             Console.WriteLine("GetApiData() function has Started...");
             var riotApi = RiotGamesApi.NewInstance(Configuration.GetConnectionString("ApiKey"));
@@ -31,14 +30,55 @@ namespace LegendsTrackerBackend.Services
             List<int> SkinIDList = new();
             if (entry != null)
             {
-                //await ParseApiData(entry.ToList(), riotApi, CompanionIDList, SkinIDList);
-                //await GetAllSpecies(CompanionIDList, SkinIDList);
+                //ParseApiData(entry.ToList(), riotApi, CompanionIDList, SkinIDList);
+                //GetAllSpecies(CompanionIDList, SkinIDList);
+                //AddDataToDatabase(CompanionIDList, SkinIDList);
             }
 
             return Task.CompletedTask;
         }
 
-        // Get contentID itemId name loadoutsIcon level speciesName speciesID rarity rarityValue
+        private static Task AddDataToDatabase(List<String> companionIdList, List<int> speciesIdList) {
+            Console.WriteLine("AddDataToDatabase has been called");
+            var jsonData = new HttpClient().GetStringAsync("https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/v1/companions.json");
+            jsonData.Wait();
+            JArray Objects = JsonConvert.DeserializeObject<JArray>(jsonData.Result);
+
+            using (var db = new LegendsDBContext()) 
+            {
+                for (int i = 0; i < companionIdList.Count(); i++)
+                {
+                    string contentId = companionIdList[i];
+
+                    var legendObj = Objects.Where(y => y["contentId"].ToString().Equals(contentId)).SingleOrDefault();
+                    string loadoutsIcon = (string)legendObj["loadoutsIcon"];
+                    string[] splitPath = loadoutsIcon.Split("/");
+                    string pngName = splitPath[^1].ToLower();
+                    string path = "https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/assets/loadouts/companions/" + pngName;
+                    Species species = db.species.Include(s=> s.Variants).FirstOrDefault(s => s.speciesCode == (int)legendObj["speciesId"]);
+                    if (species == null)
+                    {
+                        Console.WriteLine("Test");
+                    }
+                    else
+                    {
+                        Variant variant = new Variant();
+                        variant.VariantCode = (int)legendObj["itemId"];
+                        variant.level = (int)legendObj["level"];
+                        variant.rarity = (string)legendObj["rarity"];
+                        variant.name = (string)legendObj["name"];
+                        variant.imgPath = path;
+                        variant.speciesId = (int)legendObj["speciesId"];
+                        species.Variants.Add(variant);
+                        db.SaveChanges();
+                    }
+                }
+            }
+            Console.WriteLine("AddDataToDatabase has Finished!");
+            return Task.CompletedTask;
+        }
+
+        //Only needs to be run once at the start. *Get contentID itemId name loadoutsIcon level speciesName speciesID rarity rarityValue*
         private static Task GetAllSpecies(List<String> companionIdList, List<int> skinIdList)
         {
             Console.WriteLine("GetRiotJsonData() Started...");
@@ -47,7 +87,7 @@ namespace LegendsTrackerBackend.Services
             jsonData.Wait();
             JArray Objects = JsonConvert.DeserializeObject<JArray>(jsonData.Result);
 
-            var newList = Objects.Where(y => !string.IsNullOrEmpty(y["speciesName"].ToString()))
+            var newList = Objects.Where(y => y["level"].ToString().Equals("1") &&  y["rarity"].ToString().Equals("Default"))
             .GroupBy(x => x["speciesName"])
             .Select(x => x.First()).ToList();
             List<Species> speciesList = new();
@@ -61,9 +101,9 @@ namespace LegendsTrackerBackend.Services
 
                 speciesList.Add(new Species()
                 {
-                    speciesId = (int)item["speciesId"],
+                    speciesCode = (int)item["speciesId"],
                     speciesName = (string)item["speciesName"],
-                    defaultImg = path.ToLower()
+                    defaultImg = path.Trim()
                 }); 
             }
             using (var db = new LegendsDBContext())
@@ -99,8 +139,8 @@ namespace LegendsTrackerBackend.Services
                     {
                         foreach (var participant in match.Info.Participants)
                         {
-                            //Console.WriteLine($"SkinID: {participant.Companion.SkinID}");
-                            //Console.WriteLine($"ContentID: {participant.Companion.ContentID}");
+                            Console.WriteLine($"ContentID: {participant.Companion.ContentID}");
+                            Console.WriteLine($"SkinID: {participant.Companion.SkinID}");
                             companionIdList.Add(participant.Companion.ContentID);
                             skinIdList.Add(participant.Companion.SkinID);
                         }
@@ -110,17 +150,5 @@ namespace LegendsTrackerBackend.Services
 
             return Task.CompletedTask;
         }
-    }
-    //Get contentID itemId name loadoutsIcon level speciesName speciesID rarity rarityValue
-    public class CompanionData
-    {
-        public string? contentID {get; set; }
-        public int itemId { get; set; }
-        public string? name { get; set; }
-        public string? loadoutsIcon { get; set; }
-        public int level { get; set; }
-        public string? speciesName { get; set; }
-        public int speciesId { get; set; }
-        public string? rarity { get; set; }
     }
 }

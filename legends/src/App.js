@@ -1,4 +1,5 @@
 import React, { Component, useEffect, useState } from 'react';
+import './App.css'
 
 export default function App() {
     const [species, setspecies] = useState([]);
@@ -41,7 +42,6 @@ export default function App() {
                             <th scope="col"> Icon </th>
                             <th scope="col"> Name </th>
                             <th scope="col"> Species </th>
-                            <th scope="col"> Level </th>
                         </tr>
                     </thead>
                     <tbody>

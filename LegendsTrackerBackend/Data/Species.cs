@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using SQLite;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace LegendsTrackerBackend.Data
@@ -7,18 +8,15 @@ namespace LegendsTrackerBackend.Data
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public int SpeciesId { get; set; }
 
-        public int id { get; set; }
+        [Unique]
+        public int speciesCode { get; set; }
 
-        [Required]
-        public int speciesId { get; set; }
-
-        [Required]
         public string speciesName { get; set; } = String.Empty;
 
-        [Required]
         public string defaultImg { get; set; } = String.Empty;
 
-
+        public ICollection<Variant> Variants { get; set; }
     }
 }
