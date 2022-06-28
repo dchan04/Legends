@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
-
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 namespace LegendsTrackerBackend.Data
 {
     internal static class LegendsRepository
@@ -8,7 +9,7 @@ namespace LegendsTrackerBackend.Data
         {
             using (var db = new LegendsDBContext())
             {
-                return await db.species.OrderBy(c => c.speciesName).ToListAsync();
+                return await db.Species.OrderBy(c => c.SpeciesName).ToListAsync();
             }
         }
 
@@ -16,8 +17,15 @@ namespace LegendsTrackerBackend.Data
         {
             using (var db = new LegendsDBContext())
             {
-                return await db.species
-                    .FirstOrDefaultAsync(predicate: Species => Species.speciesCode == id);
+                return await db.Species
+                    .FirstOrDefaultAsync(predicate: Species => Species.SpeciesCode == id);
+            }
+        }
+        internal async static Task<List<Variant>> GetVariantsAsync()
+        {
+            using (var db = new LegendsDBContext())
+            {
+                return await db.Variants.OrderBy(c => c.VariantId).ToListAsync();
             }
         }
 

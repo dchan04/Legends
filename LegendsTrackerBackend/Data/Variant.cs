@@ -20,7 +20,7 @@ namespace LegendsTrackerBackend.Data
 
         public string imgPath { get; set; } = String.Empty;
 
-        public int speciesId { get; set; }
-        public Species? species { get; set; }
+        public int SpeciesId { get; set; }
+        public virtual Species Species { get; set; }
     }
 }

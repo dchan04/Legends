@@ -22,26 +22,29 @@ namespace LegendsTrackerBackend.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<string>("defaultImg")
+                    b.Property<string>("DefaultImg")
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<int>("speciesCode")
+                    b.Property<int>("SpeciesCode")
                         .HasColumnType("INTEGER");
 
-                    b.Property<string>("speciesName")
+                    b.Property<string>("SpeciesName")
                         .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.HasKey("SpeciesId");
 
-                    b.ToTable("species");
+                    b.ToTable("Species");
                 });
 
             modelBuilder.Entity("LegendsTrackerBackend.Data.Variant", b =>
                 {
                     b.Property<int>("VariantId")
                         .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("SpeciesId")
                         .HasColumnType("INTEGER");
 
                     b.Property<int>("VariantCode")
@@ -65,25 +68,22 @@ namespace LegendsTrackerBackend.Data.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<int>("speciesId")
-                        .HasColumnType("INTEGER");
-
                     b.HasKey("VariantId");
 
-                    b.HasIndex("speciesId");
+                    b.HasIndex("SpeciesId");
 
-                    b.ToTable("variants");
+                    b.ToTable("Variants");
                 });
 
             modelBuilder.Entity("LegendsTrackerBackend.Data.Variant", b =>
                 {
-                    b.HasOne("LegendsTrackerBackend.Data.Species", "species")
+                    b.HasOne("LegendsTrackerBackend.Data.Species", "Species")
                         .WithMany("Variants")
-                        .HasForeignKey("speciesId")
+                        .HasForeignKey("SpeciesId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("species");
+                    b.Navigation("Species");
                 });
 
             modelBuilder.Entity("LegendsTrackerBackend.Data.Species", b =>

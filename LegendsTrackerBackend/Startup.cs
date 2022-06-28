@@ -34,6 +34,9 @@ namespace LegendsTrackerBackend
                     .WithOrigins(origins: "http://localhost:3000");
                 });
             });
+            services.AddControllers().AddNewtonsoftJson(options =>
+                options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
+            );
             services.AddEndpointsApiExplorer();
             services.AddSwaggerGen(setupAction: swaggerGenOptions =>
             {
@@ -66,7 +69,8 @@ namespace LegendsTrackerBackend
             app.UseRouting();
             app.UseEndpoints(endpoint =>
             {
-                endpoint.MapGet("get-all-species", handler: async () => await LegendsRepository.GetSpeciesAsync()).WithName("Legends endpoint");
+                endpoint.MapGet("get-all-species", handler: async () => await LegendsRepository.GetSpeciesAsync()).WithName("species endpoint");
+                endpoint.MapGet("get-all-variants", handler: async () => await LegendsRepository.GetVariantsAsync()).WithName("variants endpoint");
             });
             
             BackgroundJob.Enqueue(() => serviceProvider.GetService<IRiotDataService>()!.GetApiData());

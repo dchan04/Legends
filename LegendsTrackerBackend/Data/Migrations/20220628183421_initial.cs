@@ -9,22 +9,22 @@ namespace LegendsTrackerBackend.Data.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "species",
+                name: "Species",
                 columns: table => new
                 {
                     SpeciesId = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    speciesCode = table.Column<int>(type: "INTEGER", nullable: false),
-                    speciesName = table.Column<string>(type: "TEXT", nullable: false),
-                    defaultImg = table.Column<string>(type: "TEXT", nullable: false)
+                    SpeciesCode = table.Column<int>(type: "INTEGER", nullable: false),
+                    SpeciesName = table.Column<string>(type: "TEXT", nullable: false),
+                    DefaultImg = table.Column<string>(type: "TEXT", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_species", x => x.SpeciesId);
+                    table.PrimaryKey("PK_Species", x => x.SpeciesId);
                 });
 
             migrationBuilder.CreateTable(
-                name: "variants",
+                name: "Variants",
                 columns: table => new
                 {
                     VariantId = table.Column<int>(type: "INTEGER", nullable: false)
@@ -35,32 +35,32 @@ namespace LegendsTrackerBackend.Data.Migrations
                     rarity = table.Column<string>(type: "TEXT", nullable: false),
                     name = table.Column<string>(type: "TEXT", nullable: false),
                     imgPath = table.Column<string>(type: "TEXT", nullable: false),
-                    speciesId = table.Column<int>(type: "INTEGER", nullable: false)
+                    SpeciesId = table.Column<int>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_variants", x => x.VariantId);
+                    table.PrimaryKey("PK_Variants", x => x.VariantId);
                     table.ForeignKey(
-                        name: "FK_variants_species_speciesId",
-                        column: x => x.speciesId,
-                        principalTable: "species",
+                        name: "FK_Variants_Species_SpeciesId",
+                        column: x => x.SpeciesId,
+                        principalTable: "Species",
                         principalColumn: "SpeciesId",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_variants_speciesId",
-                table: "variants",
-                column: "speciesId");
+                name: "IX_Variants_SpeciesId",
+                table: "Variants",
+                column: "SpeciesId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "variants");
+                name: "Variants");
 
             migrationBuilder.DropTable(
-                name: "species");
+                name: "Species");
         }
     }
 }
