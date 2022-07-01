@@ -4,6 +4,7 @@ using Swashbuckle.AspNetCore.SwaggerUI;
 using Hangfire;
 using Hangfire.Storage.SQLite;
 using LegendsTrackerBackend.Services;
+using Newtonsoft.Json;
 
 namespace LegendsTrackerBackend
 {
@@ -34,9 +35,9 @@ namespace LegendsTrackerBackend
                     .WithOrigins(origins: "http://localhost:3000");
                 });
             });
-            services.AddControllers().AddNewtonsoftJson(options =>
-                options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
-            );
+            services.AddControllers().AddNewtonsoftJson(options => {
+                options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
+            });
             services.AddEndpointsApiExplorer();
             services.AddSwaggerGen(setupAction: swaggerGenOptions =>
             {

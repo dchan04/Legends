@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Newtonsoft.Json;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace LegendsTrackerBackend.Data
@@ -21,6 +22,5 @@ namespace LegendsTrackerBackend.Data
         public string imgPath { get; set; } = String.Empty;
 
         public int SpeciesId { get; set; }
-        public virtual Species Species { get; set; }
     }
 }

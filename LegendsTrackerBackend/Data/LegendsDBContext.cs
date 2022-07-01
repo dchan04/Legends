@@ -12,10 +12,8 @@ namespace LegendsTrackerBackend.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Variant>()
-                .HasOne<Species>(s => s.Species)
-                .WithMany(s => s.Variants)
-                .HasForeignKey(s => s.SpeciesId);
+            modelBuilder.Entity<Species>().Navigation(c => c.Variants).AutoInclude();
+            modelBuilder.Entity<Species>().HasMany(s => s.Variants);
 
         }
     }

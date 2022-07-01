@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace LegendsTrackerBackend.Data.Migrations
 {
     [DbContext(typeof(LegendsDBContext))]
-    [Migration("20220628183421_initial")]
+    [Migration("20220701214255_initial")]
     partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

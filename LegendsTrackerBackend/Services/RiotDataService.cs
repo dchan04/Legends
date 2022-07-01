@@ -46,7 +46,11 @@ namespace LegendsTrackerBackend.Services
             using (var db = new LegendsDBContext())
             {
                 List<Species> speciesList = db.Species.Include(b => b.Variants).OrderBy(c => c.SpeciesName).ToList();
-                //Console.WriteLine(speciesList.Count());
+                Console.WriteLine(speciesList.Count());
+                foreach (var variant in speciesList)
+                {
+                    Console.WriteLine(variant.Variants.Count());
+                }
             }
             return Task.CompletedTask;
         }

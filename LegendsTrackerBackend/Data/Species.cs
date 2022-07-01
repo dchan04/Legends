@@ -20,6 +20,6 @@ namespace LegendsTrackerBackend.Data
 
         public string DefaultImg { get; set; } = String.Empty;
 
-        public virtual ICollection<Variant> Variants { get; set; } = new HashSet<Variant>();
+        public virtual List<Variant> Variants { get; set; } = new List<Variant>();
     }
 }

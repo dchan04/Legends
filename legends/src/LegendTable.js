@@ -57,7 +57,9 @@ function Row(props) {
                       <TableCell align="right">Count</TableCell>
                     </TableRow>
                   </TableHead>
-                  <TableBody></TableBody>
+                  <TableBody>
+                    
+                  </TableBody>
                 </Table>
               </Box>
             </Collapse>
