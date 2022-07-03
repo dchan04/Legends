@@ -29,7 +29,7 @@ function Row(props) {
             <img src={row.defaultImg} width={75} height={50} />
           </TableCell>
           <TableCell align="left">{row.speciesName}</TableCell>
-          <TableCell align="left">{row.speciesId}</TableCell>
+          <TableCell align="left">{row.variants.length}</TableCell>
           <TableCell>
             <IconButton
               aria-label="expand row"
@@ -45,7 +45,7 @@ function Row(props) {
             <Collapse in={open} timeout="auto" unmountOnExit>
               <Box sx={{ margin: 1 }}>
                 <Typography variant="h6" gutterBottom component="div">
-                  Species
+                  All Variants
                 </Typography>
                 <Table size="small" aria-label="variants">
                   <TableHead>
@@ -58,7 +58,21 @@ function Row(props) {
                     </TableRow>
                   </TableHead>
                   <TableBody>
-                    
+                    {row.variants.map((variantRow) => (
+                      <TableRow key={variantRow.variantId}>
+                        <TableCell align="right">
+                          <img
+                            src={variantRow.imgPath}
+                            width={75}
+                            height={50}
+                          />
+                        </TableCell>
+                        <TableCell align="right">{variantRow.name}</TableCell>
+                        <TableCell align="right">{variantRow.level}</TableCell>
+                        <TableCell align="right">{variantRow.rarity}</TableCell>
+                        <TableCell align="right">{variantRow.count}</TableCell>
+                      </TableRow>
+                    ))}
                   </TableBody>
                 </Table>
               </Box>
@@ -71,22 +85,25 @@ function Row(props) {
 
 Row.propTypes = {
   row: PropTypes.shape({
-    calories: PropTypes.number.isRequired,
-    carbs: PropTypes.number.isRequired,
-    fat: PropTypes.number.isRequired,
-    history: PropTypes.arrayOf(
+    speciesId: PropTypes.number,
+    speciesCode: PropTypes.number,
+    speciesName: PropTypes.string,
+    defaultImg: PropTypes.string,
+    variants: PropTypes.arrayOf(
       PropTypes.shape({
-        amount: PropTypes.number.isRequired,
-        customerId: PropTypes.string.isRequired,
-        date: PropTypes.string.isRequired,
+        variantId: PropTypes.number,
+        variantCode: PropTypes.number,
+        level: PropTypes.number,
+        count: PropTypes.number,
+        rarity: PropTypes.string,
+        name: PropTypes.string,
+        imgPath: PropTypes.string,
+        speciesId: PropTypes.number,
       })
-    ).isRequired,
-    name: PropTypes.string.isRequired,
-    price: PropTypes.number.isRequired,
-    protein: PropTypes.number.isRequired,
+    ),
   }).isRequired,
 };
-export default function CollapsibleTable() {
+export default function FetchLegendsTable() {
     const [species, setspecies] = useState([]);
 
     useEffect(() => {
@@ -125,7 +142,6 @@ export default function CollapsibleTable() {
           <TableBody>
             {species.map((species) => (
               <Row key={species.id} row={species}/>
-                
             ))}
           </TableBody>
         </Table>

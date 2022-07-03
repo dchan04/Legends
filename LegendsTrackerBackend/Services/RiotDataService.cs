@@ -6,7 +6,6 @@ using LegendsTrackerBackend.Data;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
-using System.Linq;
 
 
 namespace LegendsTrackerBackend.Services
@@ -36,7 +35,7 @@ namespace LegendsTrackerBackend.Services
 
                 //GetAllSpecies();
 
-                CountVariants();
+                //CountVariants();
             }
 
             return Task.CompletedTask;
@@ -99,7 +98,7 @@ namespace LegendsTrackerBackend.Services
                         else
                         {
                             species.Variants.Add(variant);
-                            Console.WriteLine(species.Variants.Count());
+                            //Console.WriteLine(species.Variants.Count());
                             //Console.WriteLine("Species Variant List NOT NULL");
                         }
                         Console.WriteLine("Duplicate NOT Found");
