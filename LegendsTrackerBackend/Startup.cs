@@ -72,6 +72,8 @@ namespace LegendsTrackerBackend
             {
                 endpoint.MapGet("get-all-species", handler: async () => await LegendsRepository.GetSpeciesAsync()).WithName("species endpoint");
                 endpoint.MapGet("get-all-variants", handler: async () => await LegendsRepository.GetVariantsAsync()).WithName("variants endpoint");
+                endpoint.MapGet("get-total-count", handler: async () => await LegendsRepository.GetTotalVariantCount()).WithName("total count endpoint");
+                endpoint.MapGet("get-total-variant-count-per-species/{speciesCode}", handler: async (int speciesCode) => await LegendsRepository.GetTotalVariantBySpeciesCount(speciesCode)).WithName("total variant count for a species endpoint");
             });
             
             BackgroundJob.Enqueue(() => serviceProvider.GetService<IRiotDataService>()!.GetApiData());

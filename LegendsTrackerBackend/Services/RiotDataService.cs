@@ -161,7 +161,7 @@ namespace LegendsTrackerBackend.Services
             }
 
             //foreach (var id in summonerIdList)
-            for (int j = 0; j < 2; j++)
+            for (int j = 0; j < 5; j++)
             {
                 var puuid = riotApi.TftSummonerV1().GetBySummonerId(PlatformRoute.NA1, summonerIdList[j]);
                 var matchList = riotApi.TftMatchV1().GetMatchIdsByPUUID(RegionalRoute.AMERICAS, puuid.Puuid);

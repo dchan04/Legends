@@ -1,6 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using System.Collections.Generic;
+
 namespace LegendsTrackerBackend.Data
 {
     internal static class LegendsRepository
@@ -29,6 +31,30 @@ namespace LegendsTrackerBackend.Data
             using (var db = new LegendsDBContext())
             {
                 return await db.Variants.OrderBy(c => c.VariantId).ToListAsync();
+            }
+        }
+
+        internal async static Task<int> GetTotalVariantCount()
+        {
+            using (var db = new LegendsDBContext())
+            {
+                return await db.Variants.CountAsync();
+            }
+        }
+
+        internal static Task<int> GetTotalVariantBySpeciesCount(int id)
+        {
+
+            using (var db = new LegendsDBContext())
+            {
+                int total = 0;
+                var species = db.Species.Where(c => c.SpeciesCode == id).FirstOrDefault();
+                var variantList = species.Variants;
+                foreach (var Variant in variantList)
+                {
+                    total += Variant.count;
+                }
+                return Task.FromResult(total);
             }
         }
 
