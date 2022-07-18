@@ -41,7 +41,7 @@ function Row(props) {
     <React.Fragment>
       <TableRow
         sx={{
-          "& > *": { borderBottom: "unset" },
+          "& > *": { borderBottom: "unset", color: "white" },
           "td:first-of-type": {
             borderTopLeftRadius: "8px",
           },
@@ -53,9 +53,7 @@ function Row(props) {
         <TableCell align="center" scope="row">
           <img src={row.defaultImg} />
         </TableCell>
-        <TableCell align="center">
-          <b>{row.speciesName}</b>
-        </TableCell>
+        <TableCell align="center">{row.speciesName}</TableCell>
         <TableCell align="center">
           {((variantCount / totalCount) * 100).toFixed(1)}%
         </TableCell>
@@ -63,6 +61,7 @@ function Row(props) {
           <IconButton
             aria-label="expand row"
             size="small"
+            style={{ color: "white" }}
             onClick={() => setOpen(!open)}
           >
             {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
@@ -70,15 +69,31 @@ function Row(props) {
         </TableCell>
       </TableRow>
       <TableRow className="variantRow">
-        <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
+        <TableCell
+          style={{ paddingBottom: 0, paddingTop: 0, color: "white" }}
+          colSpan={6}
+        >
           <Collapse in={open} timeout="auto" unmountOnExit>
             <Box sx={{ margin: 1 }}>
-              <Typography variant="h6" gutterBottom component="div">
+              <Typography
+                variant="h6"
+                align="center"
+                gutterBottom
+                component="div"
+                border="solid 2px #eaeaea"
+                width="25%"
+                marginLeft={"auto"}
+                marginRight={"auto"}
+              >
                 All Variants
               </Typography>
               <Table size="small" aria-label="variants">
                 <TableHead>
-                  <TableRow>
+                  <TableRow
+                    sx={{
+                      "& > *": { color: "white", fontWeight: "bold" },
+                    }}
+                  >
                     <TableCell align="left">Icon</TableCell>
                     <TableCell align="left">Name</TableCell>
                     <TableCell align="left">Level</TableCell>
@@ -88,7 +103,12 @@ function Row(props) {
                 </TableHead>
                 <TableBody>
                   {row.variants.map((variantRow) => (
-                    <TableRow key={variantRow.variantId}>
+                    <TableRow
+                      key={variantRow.variantId}
+                      sx={{
+                        "& > *": { color: "white" },
+                      }}
+                    >
                       <TableCell align="left">
                         <img src={variantRow.imgPath} width={75} height={50} />
                       </TableCell>
@@ -165,7 +185,14 @@ function EnhancedTableHead(props) {
 
   return (
     <TableHead>
-      <TableRow>
+      <TableRow
+        sx={{
+          "& > *": {
+            color: "white",
+            fontWeight: "bold",
+          },
+        }}
+      >
         <TableCell align="center">Icon</TableCell>
         {headCells.map((headCell) => (
           <TableCell
@@ -178,10 +205,13 @@ function EnhancedTableHead(props) {
               active={orderBy === headCell.id}
               direction={orderBy === headCell.id ? order : "asc"}
               onClick={createSortHandler(headCell.id)}
+              sx={{
+                "& > *": { color: "white" },
+              }}
             >
-              {headCell.label}
+              <b>{headCell.label}</b>
               {orderBy === headCell.id ? (
-                <Box component="span" sx={visuallyHidden}>
+                <Box color="white" component="span" sx={visuallyHidden}>
                   {order === "desc" ? "sorted descending" : "sorted ascending"}
                 </Box>
               ) : null}
@@ -231,6 +261,7 @@ export default function FetchLegendsTable() {
         sx={{
           borderCollapse: "separate",
           borderSpacing: "0px 5px",
+          color: "white",
         }}
       >
         <EnhancedTableHead

@@ -1,16 +1,20 @@
 .legendTable {
-    width:800px;
-    font-size: 13px;
-    margin-left: auto;
-    margin-right: auto;
-    text-align: center;
+  width: 800px;
+  background-color: #111;
+  font-size: 13px;
+  border-radius: 20px;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  margin-top: 25px;
+  margin-bottom: 25px;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
 }
 
 img {
-    border-style:solid;
-    border-width: 1px;
-    border-radius: 75%;
-    width:50px;
-    min-height: 50px;
-    height: auto;
+  border: solid 2px #eaeaea;
+  border-radius: 20px;
+  width: 90px;
+  min-height: 80px;
+  box-shadow: 0 4px 8px 0 rgba(255, 255, 255, 0.5), 0 6px 20px 0 rgba(255, 255, 255, 0.5);
 }
