@@ -7,13 +7,14 @@ import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
+import TableSortLabel from "@mui/material/TableSortLabel";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Typography from "@mui/material/Typography";
 import Paper from "@mui/material/Paper";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
-
+import { visuallyHidden } from "@mui/utils";
 import "./LegendTable.css";
 
 function Row(props) {
@@ -109,6 +110,33 @@ function Row(props) {
   );
 }
 
+const headCells = [
+  {
+    id: "speciesName",
+    numeric: false,
+    disablePadding: true,
+    label: "Name",
+  },
+];
+function descendingComparator(a, b, orderBy) {
+  if (b[orderBy] < a[orderBy]) {
+    return -1;
+  }
+  if (b[orderBy] > a[orderBy]) {
+    return 1;
+  }
+  return 0;
+}
+function getComparator(order, orderBy) {
+  return order === "desc"
+    ? (a, b) => descendingComparator(a, b, orderBy)
+    : (a, b) => -descendingComparator(a, b, orderBy);
+}
+EnhancedTableHead.propTypes = {
+  onRequestSort: PropTypes.func.isRequired,
+  order: PropTypes.oneOf(["asc", "desc"]).isRequired,
+  orderBy: PropTypes.string.isRequired,
+};
 Row.propTypes = {
   row: PropTypes.shape({
     speciesId: PropTypes.number,
@@ -129,8 +157,53 @@ Row.propTypes = {
     ),
   }).isRequired,
 };
+function EnhancedTableHead(props) {
+  const { order, orderBy, onRequestSort } = props;
+  const createSortHandler = (property) => (event) => {
+    onRequestSort(event, property);
+  };
+
+  return (
+    <TableHead>
+      <TableRow>
+        <TableCell align="center">Icon</TableCell>
+        {headCells.map((headCell) => (
+          <TableCell
+            key={headCell.id}
+            align="center"
+            padding={headCell.disablePadding ? "none" : "normal"}
+            sortDirection={orderBy === headCell.id ? order : false}
+          >
+            <TableSortLabel
+              active={orderBy === headCell.id}
+              direction={orderBy === headCell.id ? order : "asc"}
+              onClick={createSortHandler(headCell.id)}
+            >
+              {headCell.label}
+              {orderBy === headCell.id ? (
+                <Box component="span" sx={visuallyHidden}>
+                  {order === "desc" ? "sorted descending" : "sorted ascending"}
+                </Box>
+              ) : null}
+            </TableSortLabel>
+          </TableCell>
+        ))}
+        <TableCell align="center">Pick Rate</TableCell>
+        <TableCell align="center">All Species</TableCell>
+      </TableRow>
+    </TableHead>
+  );
+}
+
 export default function FetchLegendsTable() {
   const [species, setspecies] = useState([]);
+  const [order, setOrder] = useState("asc");
+  const [orderBy, setOrderBy] = useState("speciesName");
+  const handleRequestSort = (event, property) => {
+    const isAsc = orderBy === property && order === "asc";
+    setOrder(isAsc ? "desc" : "asc");
+    setOrderBy(property);
+  };
   useEffect(() => {
     (async () => {
       const url = "https://localhost:7150/get-all-species";
@@ -160,16 +233,13 @@ export default function FetchLegendsTable() {
           borderSpacing: "0px 5px",
         }}
       >
-        <TableHead>
-          <TableRow>
-            <TableCell align="center">Icon</TableCell>
-            <TableCell align="center">Name</TableCell>
-            <TableCell align="center">Pick Rate</TableCell>
-            <TableCell align="center">All Species</TableCell>
-          </TableRow>
-        </TableHead>
+        <EnhancedTableHead
+          order={order}
+          orderBy={orderBy}
+          onRequestSort={handleRequestSort}
+        />
         <TableBody>
-          {species.map((species) => (
+          {species.sort(getComparator(order, orderBy)).map((species) => (
             <Row key={species.id} row={species} />
           ))}
         </TableBody>
