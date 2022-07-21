@@ -1,12 +1,10 @@
-﻿
-using Camille.Enums;
+﻿using Camille.Enums;
 using Camille.RiotGames;
 using Camille.RiotGames.TftLeagueV1;
 using LegendsTrackerBackend.Data;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
-
 
 namespace LegendsTrackerBackend.Services
 {
@@ -36,8 +34,33 @@ namespace LegendsTrackerBackend.Services
                 //GetAllSpecies();
 
                 //CountVariants();
+
+                //UpdateTotalCount();
             }
 
+            return Task.CompletedTask;
+        }
+
+        private static Task UpdateTotalCount()
+        {
+            Console.WriteLine("UpdateTotalCount() has Started...");
+            using (var db = new LegendsDBContext())
+            {
+                var speciesList = db.Species.ToList();
+                foreach (var species in speciesList)
+                {
+                    var variantList = species.Variants.ToList();
+                    int totalCount = 0;
+                    foreach (var variant in variantList)
+                    {
+                        totalCount += variant.count;
+                    }
+                    species.TotalCount = totalCount;
+                    db.Species.Update(species);
+                }
+                db.SaveChanges();
+            }
+            Console.WriteLine("UpdateTotalCount() has Finished!");
             return Task.CompletedTask;
         }
         private static Task CountVariants()

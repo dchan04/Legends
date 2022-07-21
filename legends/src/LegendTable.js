@@ -17,11 +17,69 @@ import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import { visuallyHidden } from "@mui/utils";
 import "./LegendTable.css";
 
+const headCells = [
+  {
+    id: "speciesName",
+    numeric: false,
+    disablePadding: true,
+    label: "Name",
+  },
+  {
+    id: "totalCount",
+    numeric: true,
+    disablePadding: true,
+    label: "Pick Rate",
+  },
+];
+
+EnhancedTableHead.propTypes = {
+  onRequestSort: PropTypes.func.isRequired,
+  order: PropTypes.oneOf(["asc", "desc"]).isRequired,
+  orderBy: PropTypes.string.isRequired,
+};
+
+Row.propTypes = {
+  row: PropTypes.shape({
+    speciesId: PropTypes.number,
+    speciesCode: PropTypes.number,
+    speciesName: PropTypes.string,
+    totalCount: PropTypes.number,
+    defaultImg: PropTypes.string,
+    variants: PropTypes.arrayOf(
+      PropTypes.shape({
+        variantId: PropTypes.number,
+        variantCode: PropTypes.number,
+        level: PropTypes.number,
+        count: PropTypes.number,
+        rarity: PropTypes.string,
+        name: PropTypes.string,
+        imgPath: PropTypes.string,
+        speciesId: PropTypes.number,
+      })
+    ),
+  }).isRequired,
+};
+
+function descendingComparator(a, b, orderBy) {
+  if (b[orderBy] < a[orderBy]) {
+    return -1;
+  }
+  if (b[orderBy] > a[orderBy]) {
+    return 1;
+  }
+  return 0;
+}
+
+function getComparator(order, orderBy) {
+  return order === "desc"
+    ? (a, b) => descendingComparator(a, b, orderBy)
+    : (a, b) => -descendingComparator(a, b, orderBy);
+}
+
 function Row(props) {
   const { row } = props;
   const [open, setOpen] = React.useState(false);
   const [totalCount, setCount] = React.useState([]);
-  const [variantCount, setVCount] = React.useState([]);
 
   useEffect(() => {
     fetch("https://localhost:7150/get-total-count")
@@ -29,19 +87,11 @@ function Row(props) {
       .catch((error) => console.log(error));
   }, []);
 
-  useEffect(() => {
-    fetch(
-      `https://localhost:7150/get-total-variant-count-per-species/${row.speciesCode}`
-    )
-      .then((res) => res.json().then((data) => setVCount(data)))
-      .catch((error) => console.log(error));
-  }, []);
-
   return (
     <React.Fragment>
       <TableRow
         sx={{
-          "& > *": { borderBottom: "unset", color: "white" },
+          "& > *": { borderBottom: "unset", color: "white!important" },
           "td:first-of-type": {
             borderTopLeftRadius: "8px",
           },
@@ -55,7 +105,7 @@ function Row(props) {
         </TableCell>
         <TableCell align="center">{row.speciesName}</TableCell>
         <TableCell align="center">
-          {((variantCount / totalCount) * 100).toFixed(1)}%
+          {((row.totalCount / totalCount) * 100).toFixed(1)}%
         </TableCell>
         <TableCell align="center">
           <IconButton
@@ -91,7 +141,7 @@ function Row(props) {
                 <TableHead>
                   <TableRow
                     sx={{
-                      "& > *": { color: "white", fontWeight: "bold" },
+                      "& > *": { color: "white!important" },
                     }}
                   >
                     <TableCell align="left">Icon</TableCell>
@@ -106,7 +156,7 @@ function Row(props) {
                     <TableRow
                       key={variantRow.variantId}
                       sx={{
-                        "& > *": { color: "white" },
+                        "& > *": { color: "white!important" },
                       }}
                     >
                       <TableCell align="left">
@@ -116,7 +166,8 @@ function Row(props) {
                       <TableCell align="left">{variantRow.level}</TableCell>
                       <TableCell align="left">{variantRow.rarity}</TableCell>
                       <TableCell align="left">
-                        {((variantRow.count / variantCount) * 100).toFixed(1)}%
+                        {((variantRow.count / row.totalCount) * 100).toFixed(1)}
+                        %
                       </TableCell>
                     </TableRow>
                   ))}
@@ -130,53 +181,6 @@ function Row(props) {
   );
 }
 
-const headCells = [
-  {
-    id: "speciesName",
-    numeric: false,
-    disablePadding: true,
-    label: "Name",
-  },
-];
-function descendingComparator(a, b, orderBy) {
-  if (b[orderBy] < a[orderBy]) {
-    return -1;
-  }
-  if (b[orderBy] > a[orderBy]) {
-    return 1;
-  }
-  return 0;
-}
-function getComparator(order, orderBy) {
-  return order === "desc"
-    ? (a, b) => descendingComparator(a, b, orderBy)
-    : (a, b) => -descendingComparator(a, b, orderBy);
-}
-EnhancedTableHead.propTypes = {
-  onRequestSort: PropTypes.func.isRequired,
-  order: PropTypes.oneOf(["asc", "desc"]).isRequired,
-  orderBy: PropTypes.string.isRequired,
-};
-Row.propTypes = {
-  row: PropTypes.shape({
-    speciesId: PropTypes.number,
-    speciesCode: PropTypes.number,
-    speciesName: PropTypes.string,
-    defaultImg: PropTypes.string,
-    variants: PropTypes.arrayOf(
-      PropTypes.shape({
-        variantId: PropTypes.number,
-        variantCode: PropTypes.number,
-        level: PropTypes.number,
-        count: PropTypes.number,
-        rarity: PropTypes.string,
-        name: PropTypes.string,
-        imgPath: PropTypes.string,
-        speciesId: PropTypes.number,
-      })
-    ),
-  }).isRequired,
-};
 function EnhancedTableHead(props) {
   const { order, orderBy, onRequestSort } = props;
   const createSortHandler = (property) => (event) => {
@@ -188,8 +192,7 @@ function EnhancedTableHead(props) {
       <TableRow
         sx={{
           "& > *": {
-            color: "white",
-            fontWeight: "bold",
+            color: "white!important",
           },
         }}
       >
@@ -206,7 +209,7 @@ function EnhancedTableHead(props) {
               direction={orderBy === headCell.id ? order : "asc"}
               onClick={createSortHandler(headCell.id)}
               sx={{
-                "& > *": { color: "white" },
+                "& > *": { color: "white!important" },
               }}
             >
               <b>{headCell.label}</b>
@@ -218,7 +221,6 @@ function EnhancedTableHead(props) {
             </TableSortLabel>
           </TableCell>
         ))}
-        <TableCell align="center">Pick Rate</TableCell>
         <TableCell align="center">All Species</TableCell>
       </TableRow>
     </TableHead>
@@ -227,8 +229,8 @@ function EnhancedTableHead(props) {
 
 export default function FetchLegendsTable() {
   const [species, setspecies] = useState([]);
-  const [order, setOrder] = useState("asc");
-  const [orderBy, setOrderBy] = useState("speciesName");
+  const [order, setOrder] = useState("desc");
+  const [orderBy, setOrderBy] = useState("totalCount");
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === "asc";
     setOrder(isAsc ? "desc" : "asc");

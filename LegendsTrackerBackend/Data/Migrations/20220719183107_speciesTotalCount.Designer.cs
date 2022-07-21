@@ -2,6 +2,7 @@
 using LegendsTrackerBackend.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -9,9 +10,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace LegendsTrackerBackend.Data.Migrations
 {
     [DbContext(typeof(LegendsDBContext))]
-    partial class LegendsDBContextModelSnapshot : ModelSnapshot
+    [Migration("20220719183107_speciesTotalCount")]
+    partial class speciesTotalCount
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "6.0.7");
