@@ -28,14 +28,10 @@ namespace LegendsTrackerBackend.Services
             List<int> SkinIDList = new();
             if (entry != null)
             {
+                //GetAllSpecies();
                 //ParseApiData(entry.ToList(), riotApi, CompanionIDList, SkinIDList);
                 //AddDataToDatabase(CompanionIDList, SkinIDList);
-
-                //GetAllSpecies();
-
-                //CountVariants();
-
-                //UpdateTotalCount();
+                UpdateTotalCount();
             }
 
             return Task.CompletedTask;
@@ -63,19 +59,7 @@ namespace LegendsTrackerBackend.Services
             Console.WriteLine("UpdateTotalCount() has Finished!");
             return Task.CompletedTask;
         }
-        private static Task CountVariants()
-        {
-            using (var db = new LegendsDBContext())
-            {
-                List<Species> speciesList = db.Species.Include(b => b.Variants).OrderBy(c => c.SpeciesName).ToList();
-                Console.WriteLine(speciesList.Count());
-                foreach (var variant in speciesList)
-                {
-                    Console.WriteLine(variant.Variants.Count());
-                }
-            }
-            return Task.CompletedTask;
-        }
+
         private static Task AddDataToDatabase(List<String> companionIdList, List<int> speciesIdList)
         {
             Console.WriteLine("AddDataToDatabase has been called");
@@ -103,14 +87,23 @@ namespace LegendsTrackerBackend.Services
                     }
                     else
                     {
+                        
                         Variant variant = new Variant();
                         variant.VariantCode = (int)legendObj["itemId"];
                         variant.level = (int)legendObj["level"];
-                        variant.rarity = (string)legendObj["rarity"];
                         variant.name = (string)legendObj["name"];
                         variant.count = 1;
                         variant.imgPath = path;
                         variant.SpeciesId = (int)legendObj["speciesId"];
+                        var rarity = (string)legendObj["rarity"];
+                        if (!species.SpeciesName.Equals((string)legendObj["name"]) && rarity.Equals("Default"))
+                        {
+                            variant.rarity = "Rare";
+                        }
+                        else
+                        {
+                            variant.rarity = rarity;
+                        }
                         if (species.Variants.FirstOrDefault() == null)
                         {
                             List<Variant> variants = new();
@@ -159,8 +152,9 @@ namespace LegendsTrackerBackend.Services
                     SpeciesCode = (int)item["speciesId"],
                     SpeciesName = (string)item["speciesName"],
                     DefaultImg = path.Trim(),
+                    TotalCount = 0,
                     Variants = variants
-                });
+                }); ;
             }
             using (var db = new LegendsDBContext())
             {
@@ -184,11 +178,11 @@ namespace LegendsTrackerBackend.Services
             }
 
             //foreach (var id in summonerIdList)
-            for (int j = 0; j < 5; j++)
+            for (int j = 0; j < 10; j++)
             {
                 var puuid = riotApi.TftSummonerV1().GetBySummonerId(PlatformRoute.NA1, summonerIdList[j]);
                 var matchList = riotApi.TftMatchV1().GetMatchIdsByPUUID(RegionalRoute.AMERICAS, puuid.Puuid);
-                for (int i = 0; i < 2; i++)
+                for (int i = 0; i < 5; i++)
                 {
                     var match = riotApi.TftMatchV1().GetMatch(RegionalRoute.AMERICAS, matchList[i]);
                     if (match != null)

@@ -76,6 +76,14 @@ function getComparator(order, orderBy) {
     : (a, b) => -descendingComparator(a, b, orderBy);
 }
 
+const rarityColors = {
+  Default: "#FFFFF",
+  Rare: "#0070dd",
+  Epic: "rgb(163, 53, 238)",
+  Legendary: "#ff8000",
+  Mythic: "#FF55FF",
+};
+
 function Row(props) {
   const { row } = props;
   const [open, setOpen] = React.useState(false);
@@ -164,7 +172,9 @@ function Row(props) {
                       </TableCell>
                       <TableCell align="left">{variantRow.name}</TableCell>
                       <TableCell align="left">{variantRow.level}</TableCell>
-                      <TableCell align="left">{variantRow.rarity}</TableCell>
+                      <TableCell align="left" sx={{ color: rarityColors[variantRow.rarity]+"!important"}}>
+                        {variantRow.rarity}
+                      </TableCell>
                       <TableCell align="left">
                         {((variantRow.count / row.totalCount) * 100).toFixed(1)}
                         %
@@ -221,7 +231,7 @@ function EnhancedTableHead(props) {
             </TableSortLabel>
           </TableCell>
         ))}
-        <TableCell align="center">All Species</TableCell>
+        <TableCell align="center">All Variants</TableCell>
       </TableRow>
     </TableHead>
   );
