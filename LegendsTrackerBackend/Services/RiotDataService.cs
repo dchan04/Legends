@@ -20,7 +20,7 @@ namespace LegendsTrackerBackend.Services
 
         public Task GetApiData()
         {
-            Console.WriteLine("GetApiData() function has Started...");
+            Console.WriteLine("GetApiData() has been called...");
             var riotApi = RiotGamesApi.NewInstance(Configuration.GetConnectionString("ApiKey"));
             var division = "I";
             var entry = riotApi.TftLeagueV1().GetLeagueEntries(PlatformRoute.NA1, Tier.DIAMOND, division);
@@ -31,9 +31,9 @@ namespace LegendsTrackerBackend.Services
                 //GetAllSpecies();
                 //ParseApiData(entry.ToList(), riotApi, CompanionIDList, SkinIDList);
                 //AddDataToDatabase(CompanionIDList, SkinIDList);
-                UpdateTotalCount();
+                //UpdateTotalCount();
             }
-
+            Console.WriteLine("GetApiData() has Finished!");
             return Task.CompletedTask;
         }
 
@@ -178,7 +178,7 @@ namespace LegendsTrackerBackend.Services
             }
 
             //foreach (var id in summonerIdList)
-            for (int j = 0; j < 10; j++)
+            for (int j = 0; j < 20; j++)
             {
                 var puuid = riotApi.TftSummonerV1().GetBySummonerId(PlatformRoute.NA1, summonerIdList[j]);
                 var matchList = riotApi.TftMatchV1().GetMatchIdsByPUUID(RegionalRoute.AMERICAS, puuid.Puuid);

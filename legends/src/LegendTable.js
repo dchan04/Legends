@@ -1,4 +1,4 @@
-import React, { Component, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import Box from "@mui/material/Box";
 import Collapse from "@mui/material/Collapse";
@@ -88,7 +88,13 @@ function Row(props) {
   const { row } = props;
   const [open, setOpen] = React.useState(false);
   const [totalCount, setCount] = React.useState([]);
-
+  const [order, setOrder] = useState("desc");
+  const [orderBy, setOrderBy] = useState("count");
+  const imageOnErrorHandler = (event) => {
+    event.currentTarget.src =
+      "https://www.eglsf.info/wp-content/uploads/image-missing.png";
+    event.currentTarget.className = "error";
+  };
   useEffect(() => {
     fetch("https://localhost:7150/get-total-count")
       .then((res) => res.json().then((data) => setCount(data)))
@@ -99,12 +105,9 @@ function Row(props) {
     <React.Fragment>
       <TableRow
         sx={{
-          "& > *": { borderBottom: "unset", color: "white!important" },
-          "td:first-of-type": {
-            borderTopLeftRadius: "8px",
-          },
-          "td:last-of-type": {
-            borderBottomRightRadius: "8px",
+          "& > *": {
+            borderBottom: "unset!important",
+            color: "white!important",
           },
         }}
       >
@@ -156,31 +159,53 @@ function Row(props) {
                     <TableCell align="left">Name</TableCell>
                     <TableCell align="left">Level</TableCell>
                     <TableCell align="left">Rarity</TableCell>
-                    <TableCell align="left">Count</TableCell>
+                    <TableCell align="left">Pick Rate</TableCell>
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  {row.variants.map((variantRow) => (
-                    <TableRow
-                      key={variantRow.variantId}
-                      sx={{
-                        "& > *": { color: "white!important" },
-                      }}
-                    >
-                      <TableCell align="left">
-                        <img src={variantRow.imgPath} width={75} height={50} />
-                      </TableCell>
-                      <TableCell align="left">{variantRow.name}</TableCell>
-                      <TableCell align="left">{variantRow.level}</TableCell>
-                      <TableCell align="left" sx={{ color: rarityColors[variantRow.rarity]+"!important"}}>
-                        {variantRow.rarity}
-                      </TableCell>
-                      <TableCell align="left">
-                        {((variantRow.count / row.totalCount) * 100).toFixed(1)}
-                        %
-                      </TableCell>
-                    </TableRow>
-                  ))}
+                  {row.variants
+                    .sort(getComparator(order, orderBy))
+                    .map((variantRow) => (
+                      <TableRow
+                        key={variantRow.variantId}
+                        sx={{
+                          "& > *": { color: "white!important" },
+                        }}
+                      >
+                        <TableCell align="left">
+                          <img
+                            src={variantRow.imgPath}
+                            onError={imageOnErrorHandler}
+                            width={75}
+                            height={50}
+                          />
+                        </TableCell>
+                        <TableCell align="left">{variantRow.name}</TableCell>
+                        <TableCell
+                          align="left"
+                          sx={{
+                            paddingLeft: "4%",
+                          }}
+                        >
+                          {variantRow.level}
+                        </TableCell>
+                        <TableCell
+                          align="left"
+                          sx={{
+                            color:
+                              rarityColors[variantRow.rarity] + "!important",
+                          }}
+                        >
+                          {variantRow.rarity}
+                        </TableCell>
+                        <TableCell align="left">
+                          {((variantRow.count / row.totalCount) * 100).toFixed(
+                            1
+                          )}
+                          %
+                        </TableCell>
+                      </TableRow>
+                    ))}
                 </TableBody>
               </Table>
             </Box>

@@ -70,10 +70,12 @@ namespace LegendsTrackerBackend
             app.UseRouting();
             app.UseEndpoints(endpoint =>
             {
-                endpoint.MapGet("get-all-species", handler: async () => await LegendsRepository.GetSpeciesAsync()).WithName("species endpoint");
-                endpoint.MapGet("get-all-variants", handler: async () => await LegendsRepository.GetVariantsAsync()).WithName("variants endpoint");
-                endpoint.MapGet("get-total-count", handler: async () => await LegendsRepository.GetTotalVariantCount()).WithName("total count endpoint");
+                endpoint.MapGet("get-all-species", handler: async () => await LegendsRepository.GetSpeciesAsync()).WithName("Species endpoint");
+                endpoint.MapGet("get-all-variants", handler: async () => await LegendsRepository.GetVariantsAsync()).WithName("Variants endpoint");
+                endpoint.MapGet("get-total-count", handler: async () => await LegendsRepository.GetTotalVariantCount()).WithName("Total count endpoint");
                 endpoint.MapGet("get-total-variant-count-per-species/{speciesCode}", handler: async (int speciesCode) => await LegendsRepository.GetTotalVariantBySpeciesCount(speciesCode)).WithName("total variant count for a species endpoint");
+                endpoint.MapGet("get-top3-species", handler: async () => await LegendsRepository.GetTop3Species()).WithName("Top 3 Species endpoint");
+                endpoint.MapGet("get-top3-variants", handler: async () => await LegendsRepository.GetTop3Variants()).WithName("Top 3 Variants endpoint");
             });
             
             BackgroundJob.Enqueue(() => serviceProvider.GetService<IRiotDataService>()!.GetApiData());
