@@ -297,7 +297,8 @@ export default function FetchLegendsTable() {
       <Table
         sx={{
           borderCollapse: "separate",
-          borderSpacing: "0px 5px",
+          borderSpacing: "0px",
+
           color: "white",
         }}
       >
