@@ -107,19 +107,19 @@ export default function Top3Display() {
         </h1>
       </div>
       <div className="top3Container">
-        <ol className="tilesWrap">
+        <ol className="top3Wrap top3Species">
           {top3Species.map((speciesList) => (
             <Top3Species key={speciesList.speciesId} species={speciesList} />
           ))}
         </ol>
       </div>
       <div className="title text-center">
-        <h1 class="display-4">
+        <h1 className="display-4">
           Top 3 <b>Variants</b>
         </h1>
       </div>
-      <div className="top3Container">
-        <ol className="tilesWrap">
+      <div className="top3Container ">
+        <ol className="top3Wrap top3Variants">
           {top3Variants.map((variantList) => (
             <Top3Variants key={variantList.variantId} variants={variantList} />
           ))}
