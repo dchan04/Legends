@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import "./Top3Display.css";
-import { PortraitOutlined } from "@mui/icons-material";
 
 Top3Species.propTypes = {
   species: PropTypes.shape({
@@ -30,7 +29,18 @@ function Top3Species(props) {
   return (
     <React.Fragment>
       <li>
-        <img src={species.defaultImg} />
+        <img src={species.defaultImg} alt="Top3Species" />
+        <h5
+          style={{
+            color: "white",
+            paddingTop: "25px",
+            textAlign: "center",
+            fontWeight: "bold",
+            fontSize: "15px",
+          }}
+        >
+          {species.speciesName}
+        </h5>
       </li>
     </React.Fragment>
   );
@@ -54,7 +64,18 @@ function Top3Variants(props) {
   return (
     <React.Fragment>
       <li>
-        <img src={variants.imgPath} />
+        <img src={variants.imgPath} alt="Top3Variant"/>
+        <h5
+          style={{
+            color: "white",
+            paddingTop: "25px",
+            textAlign: "center",
+            fontWeight: "bold",
+            fontSize: "15px",
+          }}
+        >
+          {variants.name}
+        </h5>
       </li>
     </React.Fragment>
   );
@@ -101,29 +122,36 @@ export default function Top3Display() {
 
   return (
     <div className="Homepage">
-      <div className="title text-center">
-        <h1 class="display-4">
-          Top 3 <b>Species</b>
-        </h1>
+      <div className="top3Container">
+        <div className="title text-center">
+          <h1 class="display-4">
+            Top 3 <b style={{ color: "#ADD8E6" }}>Species</b>
+          </h1>
+        </div>
+        <div className="top3Images">
+          <ol className="top3Wrap top3Species">
+            {top3Species.map((speciesList) => (
+              <Top3Species key={speciesList.speciesId} species={speciesList} />
+            ))}
+          </ol>
+        </div>
       </div>
       <div className="top3Container">
-        <ol className="top3Wrap top3Species">
-          {top3Species.map((speciesList) => (
-            <Top3Species key={speciesList.speciesId} species={speciesList} />
-          ))}
-        </ol>
-      </div>
-      <div className="title text-center">
-        <h1 className="display-4">
-          Top 3 <b>Variants</b>
-        </h1>
-      </div>
-      <div className="top3Container ">
-        <ol className="top3Wrap top3Variants">
-          {top3Variants.map((variantList) => (
-            <Top3Variants key={variantList.variantId} variants={variantList} />
-          ))}
-        </ol>
+        <div className="title text-center">
+          <h1 className="display-4">
+            Top 3 <b style={{ color: "#90ee90" }}>Variants</b>
+          </h1>
+        </div>
+        <div className="top3Images">
+          <ol className="top3Wrap top3Variants">
+            {top3Variants.map((variantList) => (
+              <Top3Variants
+                key={variantList.variantId}
+                variants={variantList}
+              />
+            ))}
+          </ol>
+        </div>
       </div>
     </div>
   );
