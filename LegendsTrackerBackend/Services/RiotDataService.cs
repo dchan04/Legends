@@ -28,7 +28,7 @@ namespace LegendsTrackerBackend.Services
             List<int> SkinIDList = new();
             if (entry != null)
             {
-                //GetAllSpecies();
+                GetAllSpecies();
                 //ParseApiData(entry.ToList(), riotApi, CompanionIDList, SkinIDList);
                 //AddDataToDatabase(CompanionIDList, SkinIDList);
                 //UpdateTotalCount();
@@ -141,24 +141,28 @@ namespace LegendsTrackerBackend.Services
             List<Species> speciesList = new();
             List<Variant> variants = new();
 
-            foreach (var item in newList)
-            {
-                string loadoutsIcon = (string)item["loadoutsIcon"];
-                string[] splitPath = loadoutsIcon.Split("/");
-                string pngName = splitPath[^1].ToLower();
-                string path = "https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/assets/loadouts/companions/" + pngName;
-                speciesList.Add(new Species()
-                {
-                    SpeciesCode = (int)item["speciesId"],
-                    SpeciesName = (string)item["speciesName"],
-                    DefaultImg = path.Trim(),
-                    TotalCount = 0,
-                    Variants = variants
-                }); ;
-            }
             using (var db = new LegendsDBContext())
             {
-
+                foreach (var item in newList)
+                {
+                    int speciesId = (int)item["speciesId"];
+                    string speciesName = (string)item["speciesName"];
+                    string loadoutsIcon = (string)item["loadoutsIcon"];
+                    string[] splitPath = loadoutsIcon.Split("/");
+                    string pngName = splitPath[^1].ToLower();
+                    string path = "https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/assets/loadouts/companions/" + pngName;
+                    if (!db.Species.Any(s => s.SpeciesName.Equals(speciesName))){
+                        Console.WriteLine($"New species found *{speciesName}*");
+                        speciesList.Add(new Species()
+                        {
+                            SpeciesCode = speciesId,
+                            SpeciesName = speciesName,
+                            DefaultImg = path.Trim(),
+                            TotalCount = 0,
+                            Variants = variants
+                        });
+                    }
+                }
                 //db.Entry(speciesList[0]).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
                 db.Species.AddRange(speciesList);
                 db.SaveChanges();
