@@ -5,8 +5,16 @@ export default function Navbar() {
   return (
     <nav className="nav">
       <Link to="/" className="site-title">
-        Legends
+        <h2>Legends</h2>
+        <img
+          src="https://www.mobafire.com/images/tft/set7/augment/icon/dragon-alliance.png"
+          width={"auto"}
+          height={50}
+          alt="Logo"
+          className="img-Logo"
+        ></img>
       </Link>
+
       <ul>
         <CustomLink to="/">Home</CustomLink>
         <CustomLink to="/legends">Little Legends</CustomLink>

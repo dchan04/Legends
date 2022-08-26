@@ -28,7 +28,7 @@ namespace LegendsTrackerBackend.Services
             List<int> SkinIDList = new();
             if (entry != null)
             {
-                GetAllSpecies();
+                //GetAllSpecies();
                 //ParseApiData(entry.ToList(), riotApi, CompanionIDList, SkinIDList);
                 //AddDataToDatabase(CompanionIDList, SkinIDList);
                 //UpdateTotalCount();
@@ -163,7 +163,6 @@ namespace LegendsTrackerBackend.Services
                         });
                     }
                 }
-                //db.Entry(speciesList[0]).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
                 db.Species.AddRange(speciesList);
                 db.SaveChanges();
             }

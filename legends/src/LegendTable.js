@@ -22,7 +22,7 @@ const headCells = [
     id: "speciesName",
     numeric: false,
     disablePadding: true,
-    label: "Name",
+    label: "Species Name",
   },
   {
     id: "totalCount",

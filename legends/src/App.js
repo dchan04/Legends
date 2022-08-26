@@ -4,6 +4,7 @@ import Navbar from "./Navbar";
 import { Routes, Route } from "react-router-dom";
 import Top3 from "./Top3Display";
 import LegendTable from "./LegendTable";
+import Footer from "./Footer";
 
 export default function App() {
   return (
@@ -15,6 +16,7 @@ export default function App() {
           <Route path="/legends" element={<LegendTable />} />
         </Routes>
       </div>
+      <Footer />
     </>
   );
 }

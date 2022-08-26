@@ -1,15 +1,18 @@
 .nav {
   background-color: #333;
-  color: white;
+  color: #e6e6e6;
   display: flex;
   justify-content: space-between;
   align-items: stretch;
   gap: 2rem;
-  padding: 0 1rem;
+  padding: 0 3rem;
+  border-bottom: solid 1px #e6e6e6;
 }
 
 .site-title {
+  margin-left: 5%;
   font-size: 2rem;
+  color: #e6e6e6 !important;
 }
 
 .nav ul {
@@ -35,4 +38,8 @@
 
 .nav li:hover {
   background-color: #777;
+}
+
+.img-Logo {
+  margin-left: 5px;
 }
