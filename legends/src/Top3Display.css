@@ -25,9 +25,18 @@
   margin: auto;
   height: auto;
   max-width: 100%;
-  border-left: 1px solid #fff;
-  border-left-width: 0.5rem;
 }
+
+.Homepage .top3Container:nth-of-type(1) {
+  border-left: 1px solid #fff;
+  border-left-width: 2px;
+}
+
+.Homepage .top3Container:nth-of-type(2) {
+  border-right: 1px solid #fff;
+  border-right-width: 2px;
+}
+
 .top3Species {
   counter-reset: list-number;
 }

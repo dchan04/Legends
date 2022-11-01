@@ -1,6 +1,7 @@
 ﻿using Camille.Enums;
 using Camille.RiotGames;
 using Camille.RiotGames.TftLeagueV1;
+using Camille.RiotGames.TftMatchV1;
 using LegendsTrackerBackend.Data;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
@@ -28,10 +29,10 @@ namespace LegendsTrackerBackend.Services
             List<int> SkinIDList = new();
             if (entry != null)
             {
-                //GetAllSpecies();
-                //ParseApiData(entry.ToList(), riotApi, CompanionIDList, SkinIDList);
-                //AddDataToDatabase(CompanionIDList, SkinIDList);
-                //UpdateTotalCount();
+                GetAllSpecies();
+                ParseApiData(entry.ToList(), riotApi, CompanionIDList, SkinIDList);
+                AddDataToDatabase(CompanionIDList, SkinIDList);
+                UpdateTotalCount();
             }
             Console.WriteLine("GetApiData() has Finished!");
             return Task.CompletedTask;
@@ -87,7 +88,7 @@ namespace LegendsTrackerBackend.Services
                     }
                     else
                     {
-                        
+
                         Variant variant = new Variant();
                         variant.VariantCode = (int)legendObj["itemId"];
                         variant.level = (int)legendObj["level"];
@@ -151,7 +152,8 @@ namespace LegendsTrackerBackend.Services
                     string[] splitPath = loadoutsIcon.Split("/");
                     string pngName = splitPath[^1].ToLower();
                     string path = "https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/assets/loadouts/companions/" + pngName;
-                    if (!db.Species.Any(s => s.SpeciesName.Equals(speciesName))){
+                    if (!db.Species.Any(s => s.SpeciesName.Equals(speciesName)))
+                    {
                         Console.WriteLine($"New species found *{speciesName}*");
                         speciesList.Add(new Species()
                         {
@@ -174,6 +176,8 @@ namespace LegendsTrackerBackend.Services
         {
             Console.WriteLine("ParseApiData() Called");
             List<String> summonerIdList = new();
+            List<Match> gameList = new();
+
             foreach (var match in entry)
             {
                 //Console.WriteLine($"SummonerId: {match.SummonerId}");
@@ -184,23 +188,24 @@ namespace LegendsTrackerBackend.Services
             for (int j = 0; j < 20; j++)
             {
                 var puuid = riotApi.TftSummonerV1().GetBySummonerId(PlatformRoute.NA1, summonerIdList[j]);
-                var matchList = riotApi.TftMatchV1().GetMatchIdsByPUUID(RegionalRoute.AMERICAS, puuid.Puuid);
-                for (int i = 0; i < 5; i++)
+                var matchHistory = riotApi.TftMatchV1().GetMatchIdsByPUUID(RegionalRoute.AMERICAS, puuid.Puuid);
+                for (int i = 0; i < 5; i++) //grab 5 matches from the player's match history
                 {
-                    var match = riotApi.TftMatchV1().GetMatch(RegionalRoute.AMERICAS, matchList[i]);
-                    if (match != null)
-                    {
-                        foreach (var participant in match.Info.Participants)
-                        {
-                            Console.WriteLine($"ContentID: {participant.Companion.ContentID}");
-                            Console.WriteLine($"SkinID: {participant.Companion.SkinID}");
-                            companionIdList.Add(participant.Companion.ContentID);
-                            skinIdList.Add(participant.Companion.SkinID);
-                        }
-                    }
+                    var game = riotApi.TftMatchV1().GetMatch(RegionalRoute.AMERICAS, matchHistory[i]);
+                    gameList.Add(game);
                 }
             }
+            foreach (var game in gameList)
+            {
+                foreach (var participant in game.Info.Participants)
+                {
+                    Console.WriteLine($"ContentID: {participant.Companion.ContentID}");
+                    Console.WriteLine($"SkinID: {participant.Companion.SkinID}");
+                    companionIdList.Add(participant.Companion.ContentID);
+                    skinIdList.Add(participant.Companion.SkinID);
+                }
 
+            }
             return Task.CompletedTask;
         }
     }

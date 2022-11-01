@@ -35,7 +35,8 @@ namespace LegendsTrackerBackend
                     .WithOrigins(origins: "http://localhost:3000");
                 });
             });
-            services.AddControllers().AddNewtonsoftJson(options => {
+            services.AddControllers().AddNewtonsoftJson(options =>
+            {
                 options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
             });
             services.AddEndpointsApiExplorer();
@@ -77,8 +78,11 @@ namespace LegendsTrackerBackend
                 endpoint.MapGet("get-top3-species", handler: async () => await LegendsRepository.GetTop3Species()).WithName("Top 3 Species endpoint");
                 endpoint.MapGet("get-top3-variants", handler: async () => await LegendsRepository.GetTop3Variants()).WithName("Top 3 Variants endpoint");
             });
-            
-            BackgroundJob.Enqueue(() => serviceProvider.GetService<IRiotDataService>()!.GetApiData());
+
+            //BackgroundJob.Enqueue(() => serviceProvider.GetService<IRiotDataService>()!.GetApiData());
+            recurringJobManager.AddOrUpdate("Get Weekly RiotAPI Data", () => serviceProvider.GetService<IRiotDataService>().GetApiData(),
+                "0 0 12 ? * SAT"
+            );
             app.UseHangfireDashboard();
         }
     }
