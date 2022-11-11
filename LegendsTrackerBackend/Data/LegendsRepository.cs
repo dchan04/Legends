@@ -7,7 +7,6 @@ namespace LegendsTrackerBackend.Data
 {
     internal static class LegendsRepository
     {
-        
         internal async static Task<List<Species>> GetSpeciesAsync()
         {
             using var db = new LegendsDBContext();

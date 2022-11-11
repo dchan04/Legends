@@ -5,6 +5,7 @@ using Hangfire;
 using Hangfire.Storage.SQLite;
 using LegendsTrackerBackend.Services;
 using Newtonsoft.Json;
+using Microsoft.EntityFrameworkCore;
 
 namespace LegendsTrackerBackend
 {
@@ -66,7 +67,6 @@ namespace LegendsTrackerBackend
             }
 
             app.UseHttpsRedirection();
-
             app.UseCors(policyName: "CORSPolicy");
             app.UseRouting();
             app.UseEndpoints(endpoint =>

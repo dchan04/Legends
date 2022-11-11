@@ -11,9 +11,12 @@
     "IIS Express": {
       "commandName": "IISExpress",
       "launchBrowser": true,
+      "launchUrl": "http://localhost:10010",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
-      }
+      },
+      "use64Bit": true,
+      "ancmHostingModel": "OutOfProcess"
     }
   },
   "$schema": "https://json.schemastore.org/launchsettings.json",

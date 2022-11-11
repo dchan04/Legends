@@ -96,7 +96,9 @@ function Row(props) {
     event.currentTarget.className = "error";
   };
   useEffect(() => {
-    fetch("https://localhost:7150/get-total-count")
+    fetch(
+      "https://legendstrackerbackend20221109185207.azurewebsites.net/get-total-count"
+    )
       .then((res) => res.json().then((data) => setCount(data)))
       .catch((error) => console.log(error));
   }, []);
@@ -273,7 +275,8 @@ export default function FetchLegendsTable() {
   };
   useEffect(() => {
     (async () => {
-      const url = "https://localhost:7150/get-all-species";
+      const url =
+        "https://legendstrackerbackend20221109185207.azurewebsites.net/get-all-species";
       fetch(url, {
         method: "GET",
       })

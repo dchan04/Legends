@@ -64,7 +64,7 @@ function Top3Variants(props) {
   return (
     <React.Fragment>
       <li>
-        <img src={variants.imgPath} alt="Top3Variant"/>
+        <img src={variants.imgPath} alt="Top3Variant" />
         <h5
           style={{
             color: "white",
@@ -87,7 +87,8 @@ export default function Top3Display() {
 
   useEffect(() => {
     (async () => {
-      const url = "https://localhost:7150/get-top3-species";
+      const url =
+        "https://legendstrackerbackend20221109185207.azurewebsites.net/get-top3-species";
       fetch(url, {
         method: "GET",
       })
@@ -104,7 +105,8 @@ export default function Top3Display() {
   }, []);
   useEffect(() => {
     (async () => {
-      const url = "https://localhost:7150/get-top3-variants";
+      const url =
+        "https://legendstrackerbackend20221109185207.azurewebsites.net/get-top3-variants";
       fetch(url, {
         method: "GET",
       })
@@ -124,7 +126,7 @@ export default function Top3Display() {
     <div className="Homepage">
       <div className="top3Container">
         <div className="title text-center">
-          <h1 class="display-4">
+          <h1 className="display-4">
             Top 3 <b style={{ color: "#ADD8E6" }}>Species</b>
           </h1>
         </div>

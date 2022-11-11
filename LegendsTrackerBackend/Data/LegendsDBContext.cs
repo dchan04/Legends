@@ -1,9 +1,12 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
+using System.Configuration;
 
 namespace LegendsTrackerBackend.Data
 {
     public class LegendsDBContext : DbContext
     {
+
         public DbSet<Species>? Species { get; set; }
 
         public DbSet<Variant>? Variants { get; set; }
