@@ -33,7 +33,7 @@ namespace LegendsTrackerBackend
                     builder
                     .AllowAnyMethod()
                     .AllowAnyHeader()
-                    .WithOrigins(origins: "http://localhost:3000");
+                    .WithOrigins(origins: "https://dchan04.github.io/legends");
                 });
             });
             services.AddControllers().AddNewtonsoftJson(options =>
