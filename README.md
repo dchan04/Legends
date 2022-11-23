@@ -1,4 +1,6 @@
 # Legends
-A remake of my original TFT_Stats application using .NET 6 for the server and React.js for the client app.
+A web application that provides statistics in a game called Teamfight Tactics. 
+Developed using .NET 6 for the backend and React.js for the client app.
+Data is stored using Sqlite
 
 Live Demonstration: https://dchan04.github.io/Legends/
