@@ -2,6 +2,9 @@ import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import "./Top3Display.css";
 
+const port = 7150;
+const webAPI = `https://localhost:${port}`;
+
 Top3Species.propTypes = {
   species: PropTypes.shape({
     speciesId: PropTypes.number,
@@ -87,8 +90,7 @@ export default function Top3Display() {
 
   useEffect(() => {
     (async () => {
-      const url =
-        "https://legendstrackerbackend20221109185207.azurewebsites.net/get-top3-species";
+      const url = `${webAPI}/get-top3-species`;
       fetch(url, {
         method: "GET",
       })
@@ -105,8 +107,7 @@ export default function Top3Display() {
   }, []);
   useEffect(() => {
     (async () => {
-      const url =
-        "https://legendstrackerbackend20221109185207.azurewebsites.net/get-top3-variants";
+      const url = `${webAPI}/get-top3-variants`;
       fetch(url, {
         method: "GET",
       })

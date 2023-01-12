@@ -86,6 +86,10 @@ namespace LegendsTrackerBackend.Services
                         Console.WriteLine("Duplicate Found");
                         variant1.count++;
                     }
+                    else if (species == null)
+                    {
+                        Console.WriteLine("SPECIES MISSING: " + legendObj["speciesId"]);
+                    }
                     else
                     {
 
@@ -136,7 +140,7 @@ namespace LegendsTrackerBackend.Services
             jsonData.Wait();
             JArray Objects = JsonConvert.DeserializeObject<JArray>(jsonData.Result);
 
-            var newList = Objects.Where(y => y["level"].ToString().Equals("1") && y["rarity"].ToString().Equals("Default"))
+            var newList = Objects.Where(y => y["level"].ToString().Equals('1') && y["rarity"].ToString().Equals("Default") || y["rarity"].ToString().Equals("Legendary"))
             .GroupBy(x => x["speciesName"])
             .Select(x => x.First()).ToList();
             List<Species> speciesList = new();
@@ -148,6 +152,7 @@ namespace LegendsTrackerBackend.Services
                 {
                     int speciesId = (int)item["speciesId"];
                     string speciesName = (string)item["speciesName"];
+                    Console.WriteLine(speciesName);
                     string loadoutsIcon = (string)item["loadoutsIcon"];
                     string[] splitPath = loadoutsIcon.Split("/");
                     string pngName = splitPath[^1].ToLower();
