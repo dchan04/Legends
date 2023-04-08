@@ -1,45 +1,60 @@
-.nav {
-  background-color: #333;
-  color: #e6e6e6;
-  display: flex;
-  justify-content: space-between;
-  align-items: stretch;
-  gap: 2rem;
-  padding: 0 3rem;
-  border-bottom: solid 1px #e6e6e6;
+.navbar {
+  background-color: #23182c;
+  position: fixed;
+  width: 100%;
+  height: 52px;
+  align-items: center;
+  justify-content: space-evenly;
+  z-index: 1;
 }
 
-.site-title {
-  margin-left: 5%;
-  font-size: 2rem;
-  color: #e6e6e6 !important;
-}
-
-.nav ul {
-  padding: 0;
-  margin: 0;
+.navbar ul {
+  height: 100%;
   list-style-type: none;
   display: flex;
-  gap: 1rem;
 }
 
-.nav a {
-  color: inherit;
+.navbar li {
+  font-weight: 500;
+  font-size: 1rem;
+  white-space: nowrap;
+  margin: 0px 5px 0px 0px;
+}
+
+.navbar a {
   text-decoration: none;
+  font-weight: 600;
+  background: linear-gradient(180deg, #ffffff 43%, #d0d3d4 100%);
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
   height: 100%;
   display: flex;
   align-items: center;
-  padding: 0.25rem;
+  padding: 5px 15px 5px 15px;
+  transition: 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
-.nav li.active {
-  background-color: #555;
+.navbar a:hover {
+  background: linear-gradient(180deg, #abff8d 0%, #32f013 100%);
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
-.nav li:hover {
-  background-color: #777;
+.navbar .img-Logo {
+  background-image: url("./components/assets/tft_logo.jpg");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  height: 50px;
+  width: 125px;
+  margin-left: 12px;
+  z-index: 2;
 }
 
-.img-Logo {
-  margin-left: 5px;
+.logo-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 100%;
+  width: auto;
 }
