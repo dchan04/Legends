@@ -1,8 +1,11 @@
 import "./Home.css";
 import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
+import Skeleton from "react-loading-skeleton";
+import { Link } from "react-router-dom";
 const port = 7150;
 const webAPI = `https://localhost:${port}`;
+
 Home.propTypes = {
   species: PropTypes.shape({
     speciesId: PropTypes.number,
@@ -43,14 +46,14 @@ function Top3Species(props) {
   return (
     <React.Fragment>
       <li>
-        <img src={species.defaultImg} alt="Top3Species" />
+        <img src={species.defaultImg || <Skeleton />} alt="Top3Species" />
         <h5
           style={{
             color: "white",
             paddingTop: "5px",
             textAlign: "left",
             fontWeight: "600",
-            fontSize: "18px",
+            fontSize: "1.1vw",
           }}
         >
           {species.speciesName}
@@ -65,14 +68,14 @@ function Top3Variants(props) {
   return (
     <React.Fragment>
       <li>
-        <img src={variants.imgPath} alt="Top3Variant" />
+        <img src={variants.imgPath || <Skeleton />} alt="Top3Variant" />
         <h5
           style={{
             color: "white",
             paddingTop: "5px",
             textAlign: "left",
             fontWeight: "600",
-            fontSize: "18px",
+            fontSize: "1.1vw",
           }}
         >
           {variants.name}
@@ -157,13 +160,10 @@ function Home() {
               </ol>
             </div>
           </div>
-          <div id="view-all-button">
-            <button class="learn-more">
-              <span class="circle" aria-hidden="true">
-                <span class="icon arrow"></span>
-              </span>
-              <span class="button-text">See Full List</span>
-            </button>
+          <div id="view-all-button-container">
+            <Link to="/legends" id="view-all-button">
+              See More
+            </Link>
           </div>
         </div>
       </div>

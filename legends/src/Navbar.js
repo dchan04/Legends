@@ -1,13 +1,5 @@
 import "./Navbar.css";
-import {
-  AppBar,
-  Toolbar,
-  CssBaseline,
-  Typography,
-  List,
-  Divider,
-  makeStyles,
-} from "@mui/material";
+import { AppBar, Typography, List } from "@mui/material";
 import { Link, useMatch, useResolvedPath } from "react-router-dom";
 
 export default function Navbar() {

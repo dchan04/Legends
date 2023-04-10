@@ -1,22 +1,44 @@
+.legends-container {
+  padding-top: 52px;
+  padding-bottom: 1vh;
+  width: 100vw;
+  height: auto;
+  background-image: url("components/assets/legend-background.jpg");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-attachment: fixed;
+}
+
 .legendTable {
-  width: 900px;
-  background-color: #111;
-  font-size: 13px;
-  border-radius: 20px;
-  box-shadow: 0 0px 15px 0 rgba(255, 255, 255, 0.25), 0 0px 0px 0 rgba(255, 255, 255, 0.25);
-  margin-top: 25px;
-  margin-bottom: 25px;
-  margin-left: auto;
-  margin-right: auto;
+  background: radial-gradient(
+    circle,
+    rgba(82, 85, 143, 1) 0%,
+    rgba(32, 22, 69, 1) 100%
+  );
+  font-size: 1vw;
+  font-weight: 600;
+  width: 50vw;
+  margin: 2vh 0vw 0vh 22.5vw;
+  border: 1px black solid;
   text-align: center;
   color: white;
+  opacity: 0.95;
 }
 
 .legendTable img {
-  border: solid 2px #eaeaea;
-  border-radius: 15px;
-  width: 100px;
+  border-radius: 5px;
+  width: auto;
   min-height: 75px;
-  box-shadow: 0 2px 4px 0 rgba(255, 255, 255, 0.5), 0 3px 10px 0 rgba(255, 255, 255, 0.5);
-  
+}
+
+.MuiTypography-root {
+  font-size: 1.5rem;
+}
+
+.MuiCollapse-root {
+  box-shadow: 0px 0px 5px 1px #000;
+  width: inherit;
+  margin-top: 10px;
+  margin-bottom: 10px;
 }

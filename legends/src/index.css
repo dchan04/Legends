@@ -648,11 +648,7 @@
   text-decoration: var(--md-sys-typescale-title-small-text-decoration);
 }
 body {
-  background-image: url("./components/assets/background.svg");
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
-
+  background: #201645;
   overflow-x: clip;
   text-align: center;
   margin: 0;

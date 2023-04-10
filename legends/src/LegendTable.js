@@ -15,6 +15,7 @@ import Paper from "@mui/material/Paper";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import { visuallyHidden } from "@mui/utils";
+import Skeleton from "react-loading-skeleton";
 import "./LegendTable.css";
 
 const port = 7150;
@@ -117,9 +118,9 @@ function Row(props) {
           },
         }}
       >
-        <TableCell align="center" scope="row">
+        <TableCell align="center" size="small" scope="row">
           <img
-            src={row.defaultImg}
+            src={row.defaultImg || <Skeleton />}
             onError={imageOnErrorHandler}
             width={75}
             height={50}
@@ -147,19 +148,14 @@ function Row(props) {
         >
           <Collapse in={open} timeout="auto" unmountOnExit>
             <Box sx={{ margin: 1 }}>
-              <Typography
-                variant="h6"
-                align="center"
-                gutterBottom
-                component="div"
-                border="solid 2px #eaeaea"
-                width="25%"
-                marginLeft={"auto"}
-                marginRight={"auto"}
-              >
+              <Typography variant="h6" align="center">
                 All Variants
               </Typography>
-              <Table size="small" aria-label="variants">
+              <Table
+                className="variant-table"
+                size="small"
+                aria-label="variants"
+              >
                 <TableHead>
                   <TableRow
                     sx={{
@@ -185,7 +181,7 @@ function Row(props) {
                       >
                         <TableCell align="left">
                           <img
-                            src={variantRow.imgPath}
+                            src={variantRow.imgPath || <Skeleton />}
                             onError={imageOnErrorHandler}
                             width={75}
                             height={50}
@@ -277,6 +273,7 @@ export default function FetchLegendsTable() {
   const [species, setspecies] = useState([]);
   const [order, setOrder] = useState("desc");
   const [orderBy, setOrderBy] = useState("totalCount");
+  const [isLoading, setisLoading] = useState(true);
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === "asc";
     setOrder(isAsc ? "desc" : "asc");
@@ -292,6 +289,7 @@ export default function FetchLegendsTable() {
         .then((speciesFromServer) => {
           console.log(speciesFromServer);
           setspecies(speciesFromServer);
+          setisLoading(false);
         })
         .catch((error) => {
           console.log(error);
@@ -301,28 +299,24 @@ export default function FetchLegendsTable() {
   }, []);
 
   return (
-    <TableContainer
-      className="table-responsive legendTable justify-content-center align-items-center"
-      component={Paper}
-    >
-      <Table
-        sx={{
-          borderCollapse: "separate",
-          borderSpacing: "0px",
-          color: "white",
-        }}
+    <div className="legends-container">
+      <TableContainer
+        className="table-responsive legendTable justify-content-center align-items-center"
+        component={Paper}
       >
-        <EnhancedTableHead
-          order={order}
-          orderBy={orderBy}
-          onRequestSort={handleRequestSort}
-        />
-        <TableBody>
-          {species.sort(getComparator(order, orderBy)).map((species) => (
-            <Row key={species.id} row={species} />
-          ))}
-        </TableBody>
-      </Table>
-    </TableContainer>
+        <Table>
+          <EnhancedTableHead
+            order={order}
+            orderBy={orderBy}
+            onRequestSort={handleRequestSort}
+          />
+          <TableBody>
+            {species.sort(getComparator(order, orderBy)).map((species) => (
+              <Row key={species.id} row={species} />
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
+    </div>
   );
 }

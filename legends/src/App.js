@@ -13,7 +13,7 @@ export default function App() {
       <Navbar />
       <div>
         <Routes>
-          <Route index path="/*" element={<HomePage />} />
+          <Route index path="/" element={<HomePage />} />
           <Route path="/legends" element={<LegendTable />} />
         </Routes>
       </div>
