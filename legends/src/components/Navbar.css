@@ -41,7 +41,7 @@
 }
 
 .navbar .img-Logo {
-  background-image: url("./components/assets/tft_logo.jpg");
+  background-image: url("./assets/tft_logo.jpg");
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;

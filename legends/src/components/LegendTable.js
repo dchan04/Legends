@@ -15,7 +15,6 @@ import Paper from "@mui/material/Paper";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import { visuallyHidden } from "@mui/utils";
-import Skeleton from "react-loading-skeleton";
 import "./LegendTable.css";
 
 const port = 7150;
@@ -120,7 +119,7 @@ function Row(props) {
       >
         <TableCell align="center" size="small" scope="row">
           <img
-            src={row.defaultImg || <Skeleton />}
+            src={row.defaultImg}
             onError={imageOnErrorHandler}
             width={75}
             height={50}
@@ -181,7 +180,7 @@ function Row(props) {
                       >
                         <TableCell align="left">
                           <img
-                            src={variantRow.imgPath || <Skeleton />}
+                            src={variantRow.imgPath}
                             onError={imageOnErrorHandler}
                             width={75}
                             height={50}
@@ -273,7 +272,6 @@ export default function FetchLegendsTable() {
   const [species, setspecies] = useState([]);
   const [order, setOrder] = useState("desc");
   const [orderBy, setOrderBy] = useState("totalCount");
-  const [isLoading, setisLoading] = useState(true);
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === "asc";
     setOrder(isAsc ? "desc" : "asc");
@@ -289,7 +287,6 @@ export default function FetchLegendsTable() {
         .then((speciesFromServer) => {
           console.log(speciesFromServer);
           setspecies(speciesFromServer);
-          setisLoading(false);
         })
         .catch((error) => {
           console.log(error);

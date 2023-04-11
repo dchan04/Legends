@@ -1,11 +1,10 @@
 import React, { Component, useEffect, useState } from "react";
 import "./App.css";
-import Navbar from "./Navbar";
 import { Routes, Route } from "react-router-dom";
+import Navbar from "./components/Navbar";
 import HomePage from "./components/Home";
-import Top3 from "./Top3Display";
-import LegendTable from "./LegendTable";
-import Footer from "./Footer";
+import LegendTable from "./components/LegendTable";
+import Footer from "./components/Footer";
 
 export default function App() {
   return (
