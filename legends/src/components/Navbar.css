@@ -3,41 +3,41 @@
   position: fixed;
   width: 100%;
   height: 52px;
+  padding: 0px 0px 0px 0px;
+  justify-content: baseline;
   align-items: center;
-  justify-content: space-evenly;
   z-index: 1;
+  opacity: 0.95;
 }
 
 .navbar ul {
-  height: 100%;
-  list-style-type: none;
   display: flex;
+  height: 100%;
+  padding: 0px 5px 0px 0px;
+  list-style-type: none;
 }
 
 .navbar li {
-  font-weight: 500;
-  font-size: 1rem;
   white-space: nowrap;
-  margin: 0px 5px 0px 0px;
+  list-style: none;
+  margin: auto;
+  border-radius: 20px;
 }
 
 .navbar a {
   text-decoration: none;
+  display: block;
   font-weight: 600;
-  background: linear-gradient(180deg, #ffffff 43%, #d0d3d4 100%);
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
+  font-size: 1rem;
+  color: white;
   height: 100%;
-  display: flex;
-  align-items: center;
-  padding: 5px 15px 5px 15px;
-  transition: 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  padding: 10px 20px;
+  border-radius: 10px;
+  transition: 0.25s ease;
 }
-
 .navbar a:hover {
-  background: linear-gradient(180deg, #abff8d 0%, #32f013 100%);
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
+  background: white;
+  color: #23182c;
 }
 
 .navbar .img-Logo {
@@ -47,14 +47,18 @@
   background-size: cover;
   height: 50px;
   width: 125px;
-  margin-left: 12px;
+  margin-left: 10px;
   z-index: 2;
 }
 
 .logo-container {
   display: flex;
-  align-items: center;
-  justify-content: space-between;
+  padding: 0px 10px;
   height: 100%;
-  width: auto;
+}
+
+.logo-name {
+  font-size: 1.6rem;
+  font-weight: 600;
+  padding: 5px 10px;
 }

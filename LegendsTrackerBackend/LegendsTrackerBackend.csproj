@@ -8,6 +8,7 @@
     <DockerfileContext>..\LegendsTracker</DockerfileContext>
     <UserSecretsId>7a83ccc1-d6d5-4e39-98e1-c9bb6f686226</UserSecretsId>
     <StartupObject></StartupObject>
+    <EnableSdkContainerSupport>true</EnableSdkContainerSupport>
   </PropertyGroup>
 
   <ItemGroup>

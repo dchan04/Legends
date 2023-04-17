@@ -4,17 +4,19 @@ import { Link, useMatch, useResolvedPath } from "react-router-dom";
 
 export default function Navbar() {
   return (
-    <AppBar position="static" className="navbar">
-      <a className="logo-container">
-        <Typography variant="h5" component="div" fontWeight={800}>
-          Legends - Set 8.5
-        </Typography>
-        <div className="img-Logo"></div>
-      </a>
-      <List>
-        <CustomLink to="/">Home</CustomLink>
-        <CustomLink to="/legends">Little Legends</CustomLink>
-      </List>
+    <AppBar position="static">
+      <div className="navbar">
+        <div className="logo-container">
+          <Typography className="logo-name" component="div" fontWeight={600}>
+            Legends - Set 8.5 x
+          </Typography>
+          <div className="img-Logo" />
+        </div>
+        <List dense={true}>
+          <CustomLink to="/">Home</CustomLink>
+          <CustomLink to="/legends">Little Legends</CustomLink>
+        </List>
+      </div>
     </AppBar>
   );
 }
