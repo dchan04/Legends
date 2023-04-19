@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 import Skeleton from "react-loading-skeleton";
 import { Link } from "react-router-dom";
 const port = 7150;
-const webAPI = `https://localhost:${port}`;
+const webAPI = `https://legends-backend.onrender.com`;
 
 Home.propTypes = {
   species: PropTypes.shape({

@@ -18,7 +18,7 @@ import { visuallyHidden } from "@mui/utils";
 import "./LegendTable.css";
 
 const port = 7150;
-const webAPI = `https://localhost:${port}`;
+const webAPI = `https://legends-backend.onrender.com`;
 
 const headCells = [
   {
