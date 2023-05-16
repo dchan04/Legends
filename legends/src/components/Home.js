@@ -1,7 +1,6 @@
 import "./Home.css";
 import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
-import Skeleton from "react-loading-skeleton";
 import { Link } from "react-router-dom";
 const port = 7150;
 const webAPI = `https://legends-backend.onrender.com`;
@@ -46,7 +45,7 @@ function Top3Species(props) {
   return (
     <React.Fragment>
       <li>
-        <img src={species.defaultImg || <Skeleton />} alt="Top3Species" />
+        <img src={species.defaultImg} alt="Top 3 Species" loading="lazy" />
         <h5
           style={{
             color: "white",
@@ -68,7 +67,7 @@ function Top3Variants(props) {
   return (
     <React.Fragment>
       <li>
-        <img src={variants.imgPath || <Skeleton />} alt="Top3Variant" />
+        <img src={variants.imgPath} alt="Top 3 Variant" loading="lazy" />
         <h5
           style={{
             color: "white",
@@ -105,6 +104,7 @@ function Home() {
         });
     })();
   }, []);
+
   useEffect(() => {
     (async () => {
       const url = `${webAPI}/get-top3-variants`;
@@ -122,6 +122,7 @@ function Home() {
         });
     })();
   }, []);
+
   return (
     <div className="home-container">
       <div className="home-content">
@@ -136,12 +137,13 @@ function Home() {
             </div>
             <div className="top3-list">
               <ol>
-                {top3Species.map((speciesList) => (
-                  <Top3Species
-                    key={speciesList.speciesId}
-                    species={speciesList}
-                  />
-                ))}
+                {top3Species &&
+                  top3Species.map((speciesList) => (
+                    <Top3Species
+                      key={speciesList.speciesId}
+                      species={speciesList}
+                    />
+                  ))}
               </ol>
             </div>
           </div>
@@ -151,12 +153,13 @@ function Home() {
             </div>
             <div className="top3-list">
               <ol>
-                {top3Variants.map((variantList) => (
-                  <Top3Variants
-                    key={variantList.variantId}
-                    variants={variantList}
-                  />
-                ))}
+                {top3Variants &&
+                  top3Variants.map((variantList) => (
+                    <Top3Variants
+                      key={variantList.variantId}
+                      variants={variantList}
+                    />
+                  ))}
               </ol>
             </div>
           </div>

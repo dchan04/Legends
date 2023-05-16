@@ -17,7 +17,6 @@ import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import { visuallyHidden } from "@mui/utils";
 import "./LegendTable.css";
 
-const port = 7150;
 const webAPI = `https://legends-backend.onrender.com`;
 
 const headCells = [
@@ -120,9 +119,11 @@ function Row(props) {
         <TableCell align="center" size="small" scope="row">
           <img
             src={row.defaultImg}
+            alt="Species img"
             onError={imageOnErrorHandler}
             width={75}
             height={50}
+            loading="lazy"
           />
         </TableCell>
         <TableCell align="center">{row.speciesName}</TableCell>
@@ -181,9 +182,11 @@ function Row(props) {
                         <TableCell align="left">
                           <img
                             src={variantRow.imgPath}
+                            alt="variant img"
                             onError={imageOnErrorHandler}
                             width={75}
                             height={50}
+                            loading="lazy"
                           />
                         </TableCell>
                         <TableCell align="left">{variantRow.name}</TableCell>
