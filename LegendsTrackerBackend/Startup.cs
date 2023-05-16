@@ -5,7 +5,6 @@ using Hangfire;
 using Hangfire.Storage.SQLite;
 using LegendsTrackerBackend.Services;
 using Newtonsoft.Json;
-using Microsoft.EntityFrameworkCore;
 
 namespace LegendsTrackerBackend
 {
@@ -31,9 +30,9 @@ namespace LegendsTrackerBackend
                 options.AddPolicy("CORSPolicy", configurePolicy: builder =>
                 {
                     builder
-                    .AllowAnyMethod()
+                    .AllowAnyOrigin()
                     .AllowAnyHeader()
-                    .WithOrigins(origins: "https://dchan04.github.io/legends");
+                    .AllowAnyMethod();
                 });
             });
             services.AddControllers().AddNewtonsoftJson(options =>

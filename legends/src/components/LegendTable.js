@@ -17,6 +17,8 @@ import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import { visuallyHidden } from "@mui/utils";
 import "./LegendTable.css";
 
+const webAPI = `https://legends-backend.onrender.com`;
+
 const headCells = [
   {
     id: "speciesName",
@@ -92,13 +94,14 @@ function Row(props) {
   const [orderBy, setOrderBy] = useState("count");
   const imageOnErrorHandler = (event) => {
     event.currentTarget.src =
-      "https://www.eglsf.info/wp-content/uploads/image-missing.png";
-    event.currentTarget.className = "error";
+      "https://media.istockphoto.com/id/1357365823/vector/default-image-icon-vector-missing-picture-page-for-website-design-or-mobile-app-no-photo.jpg?b=1&s=170667a&w=0&k=20&c=LEhQ7Gji4-gllQqp80hLpQsLHlHLw61DoiVf7XJsSx0=";
+    event.currentTarget.className = "Original Image not found";
   };
   useEffect(() => {
-    fetch(
-      "https://legendstrackerbackend20221109185207.azurewebsites.net/get-total-count"
-    )
+    const url = `${webAPI}/get-total-count`;
+    fetch(url, {
+      method: "GET",
+    })
       .then((res) => res.json().then((data) => setCount(data)))
       .catch((error) => console.log(error));
   }, []);
@@ -113,8 +116,15 @@ function Row(props) {
           },
         }}
       >
-        <TableCell align="center" scope="row">
-          <img src={row.defaultImg} />
+        <TableCell align="center" size="small" scope="row">
+          <img
+            src={row.defaultImg}
+            alt="Species img"
+            onError={imageOnErrorHandler}
+            width={75}
+            height={50}
+            loading="lazy"
+          />
         </TableCell>
         <TableCell align="center">{row.speciesName}</TableCell>
         <TableCell align="center">
@@ -138,19 +148,14 @@ function Row(props) {
         >
           <Collapse in={open} timeout="auto" unmountOnExit>
             <Box sx={{ margin: 1 }}>
-              <Typography
-                variant="h6"
-                align="center"
-                gutterBottom
-                component="div"
-                border="solid 2px #eaeaea"
-                width="25%"
-                marginLeft={"auto"}
-                marginRight={"auto"}
-              >
+              <Typography variant="h6" align="center">
                 All Variants
               </Typography>
-              <Table size="small" aria-label="variants">
+              <Table
+                className="variant-table"
+                size="small"
+                aria-label="variants"
+              >
                 <TableHead>
                   <TableRow
                     sx={{
@@ -177,9 +182,11 @@ function Row(props) {
                         <TableCell align="left">
                           <img
                             src={variantRow.imgPath}
+                            alt="variant img"
                             onError={imageOnErrorHandler}
                             width={75}
                             height={50}
+                            loading="lazy"
                           />
                         </TableCell>
                         <TableCell align="left">{variantRow.name}</TableCell>
@@ -275,8 +282,7 @@ export default function FetchLegendsTable() {
   };
   useEffect(() => {
     (async () => {
-      const url =
-        "https://legendstrackerbackend20221109185207.azurewebsites.net/get-all-species";
+      const url = `${webAPI}/get-all-species`;
       fetch(url, {
         method: "GET",
       })
@@ -293,29 +299,24 @@ export default function FetchLegendsTable() {
   }, []);
 
   return (
-    <TableContainer
-      className="table-responsive legendTable justify-content-center align-items-center"
-      component={Paper}
-    >
-      <Table
-        sx={{
-          borderCollapse: "separate",
-          borderSpacing: "0px",
-
-          color: "white",
-        }}
+    <div className="legends-container">
+      <TableContainer
+        className="table-responsive legendTable justify-content-center align-items-center"
+        component={Paper}
       >
-        <EnhancedTableHead
-          order={order}
-          orderBy={orderBy}
-          onRequestSort={handleRequestSort}
-        />
-        <TableBody>
-          {species.sort(getComparator(order, orderBy)).map((species) => (
-            <Row key={species.id} row={species} />
-          ))}
-        </TableBody>
-      </Table>
-    </TableContainer>
+        <Table>
+          <EnhancedTableHead
+            order={order}
+            orderBy={orderBy}
+            onRequestSort={handleRequestSort}
+          />
+          <TableBody>
+            {species.sort(getComparator(order, orderBy)).map((species) => (
+              <Row key={species.id} row={species} />
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
+    </div>
   );
 }

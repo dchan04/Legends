@@ -6,6 +6,7 @@ using LegendsTrackerBackend.Data;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using System.Security.Policy;
 
 namespace LegendsTrackerBackend.Services
 {
@@ -33,6 +34,7 @@ namespace LegendsTrackerBackend.Services
                 ParseApiData(entry.ToList(), riotApi, CompanionIDList, SkinIDList);
                 AddDataToDatabase(CompanionIDList, SkinIDList);
                 UpdateTotalCount();
+                UpdateImages();
             }
             Console.WriteLine("GetApiData() has Finished!");
             return Task.CompletedTask;
@@ -86,6 +88,10 @@ namespace LegendsTrackerBackend.Services
                         Console.WriteLine("Duplicate Found");
                         variant1.count++;
                     }
+                    else if (species == null)
+                    {
+                        Console.WriteLine("SPECIES MISSING: " + legendObj["speciesId"]);
+                    }
                     else
                     {
 
@@ -136,7 +142,7 @@ namespace LegendsTrackerBackend.Services
             jsonData.Wait();
             JArray Objects = JsonConvert.DeserializeObject<JArray>(jsonData.Result);
 
-            var newList = Objects.Where(y => y["level"].ToString().Equals("1") && y["rarity"].ToString().Equals("Default"))
+            var newList = Objects.Where(y => y["level"].ToString().Equals('1') && y["rarity"].ToString().Equals("Default") || y["rarity"].ToString().Equals("Legendary"))
             .GroupBy(x => x["speciesName"])
             .Select(x => x.First()).ToList();
             List<Species> speciesList = new();
@@ -206,6 +212,41 @@ namespace LegendsTrackerBackend.Services
                 }
 
             }
+            return Task.CompletedTask;
+        }
+
+        //Updates the images to match the updated ones in the json. This is needed because they change the name of the images sometimes.
+        public static Task UpdateImages()
+        {
+            Console.WriteLine("updateImages() has been called...");
+            var jsonData = new HttpClient().GetStringAsync("https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/v1/companions.json");
+            jsonData.Wait();
+            JArray Objects = JsonConvert.DeserializeObject<JArray>(jsonData.Result);
+            using (var db = new LegendsDBContext())
+            {
+                var vList = db.Variants.ToList();
+                foreach (var v in vList)
+                {
+                    var legendObj = Objects.Where(y => y["itemId"].ToString().Equals(v.VariantCode.ToString())).FirstOrDefault();
+                    string loadoutsIcon = (string)legendObj["loadoutsIcon"];
+                    string[] splitPath = loadoutsIcon.Split("/");
+                    string pngName = splitPath[^1].ToLower();
+                    string path = "https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/assets/loadouts/companions/" + pngName;
+                    v.imgPath = path;
+                }
+                var sList = db.Species.ToList();
+                foreach (var s in sList)
+                {
+                    var tempSpecies = Objects.Where(y => y["speciesName"].ToString().Equals(s.SpeciesName)).FirstOrDefault();
+                    string loadoutsIcon = (string)tempSpecies["loadoutsIcon"];
+                    string[] splitPath = loadoutsIcon.Split("/");
+                    string pngName = splitPath[^1].ToLower();
+                    string path = "https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/assets/loadouts/companions/" + pngName;
+                    s.DefaultImg = path;
+                }
+                db.SaveChanges();
+            }
+            Console.WriteLine("updateImages() has completed.");
             return Task.CompletedTask;
         }
     }
