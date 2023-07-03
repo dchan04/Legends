@@ -23,7 +23,7 @@ namespace LegendsTrackerBackend.Services
         public Task GetApiData()
         {
             Console.WriteLine("GetApiData() has been called...");
-            var riotApi = RiotGamesApi.NewInstance(Configuration.GetConnectionString("ApiKey"));
+            var riotApi = RiotGamesApi.NewInstance(Configuration["ApiKey"]);
             var division = "I";
             var entry = riotApi.TftLeagueV1().GetLeagueEntries(PlatformRoute.NA1, Tier.DIAMOND, division);
             List<string> CompanionIDList = new();
