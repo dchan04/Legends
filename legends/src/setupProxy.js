@@ -2,17 +2,17 @@
 const { createProxyMiddleware } = require("http-proxy-middleware");
 const context = ["/legends"];
 
-const targetPort = "https://legends-backend.onrender.com";
+const targetPort = "https://tftappbackend.onrender.com";
 
 module.exports = function (app) {
-  const appProxy = createProxyMiddleware(context, {
-    target: targetPort,
-    headers: {
-      accept: "application/json",
-      method: "GET",
-    },
-    changeOrigin: true,
-  });
+	const appProxy = createProxyMiddleware(context, {
+		target: targetPort,
+		headers: {
+			accept: "application/json",
+			method: "GET",
+		},
+		changeOrigin: true,
+	});
 
-  app.use(appProxy);
+	app.use(appProxy);
 };
