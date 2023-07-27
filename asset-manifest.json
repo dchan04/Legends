@@ -1,15 +1,18 @@
 {
   "files": {
-    "main.css": "/Legends/static/css/main.77b4aaf8.css",
-    "main.js": "/Legends/static/js/main.de2089c6.js",
-    "static/js/787.49f0a139.chunk.js": "/Legends/static/js/787.49f0a139.chunk.js",
-    "index.html": "/Legends/index.html",
-    "main.77b4aaf8.css.map": "/Legends/static/css/main.77b4aaf8.css.map",
-    "main.de2089c6.js.map": "/Legends/static/js/main.de2089c6.js.map",
-    "787.49f0a139.chunk.js.map": "/Legends/static/js/787.49f0a139.chunk.js.map"
+    "main.css": "/static/css/main.7f0b869e.css",
+    "main.js": "/static/js/main.5e97501f.js",
+    "static/js/787.49f0a139.chunk.js": "/static/js/787.49f0a139.chunk.js",
+    "static/media/background.svg": "/static/media/background.4ade972c73a3fb066e46.svg",
+    "static/media/legend-background.jpg": "/static/media/legend-background.142f7b22e60658a9adcf.jpg",
+    "static/media/tft_logo.jpg": "/static/media/tft_logo.93dcb05f5c50f942ad0d.jpg",
+    "index.html": "/index.html",
+    "main.7f0b869e.css.map": "/static/css/main.7f0b869e.css.map",
+    "main.5e97501f.js.map": "/static/js/main.5e97501f.js.map",
+    "787.49f0a139.chunk.js.map": "/static/js/787.49f0a139.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.77b4aaf8.css",
-    "static/js/main.de2089c6.js"
+    "static/css/main.7f0b869e.css",
+    "static/js/main.5e97501f.js"
   ]
 }
