@@ -1,18 +1,18 @@
 {
   "files": {
-    "main.css": "/static/css/main.7f0b869e.css",
-    "main.js": "/static/js/main.5e97501f.js",
-    "static/js/787.49f0a139.chunk.js": "/static/js/787.49f0a139.chunk.js",
-    "static/media/background.svg": "/static/media/background.4ade972c73a3fb066e46.svg",
-    "static/media/legend-background.jpg": "/static/media/legend-background.142f7b22e60658a9adcf.jpg",
-    "static/media/tft_logo.jpg": "/static/media/tft_logo.93dcb05f5c50f942ad0d.jpg",
-    "index.html": "/index.html",
-    "main.7f0b869e.css.map": "/static/css/main.7f0b869e.css.map",
-    "main.5e97501f.js.map": "/static/js/main.5e97501f.js.map",
-    "787.49f0a139.chunk.js.map": "/static/js/787.49f0a139.chunk.js.map"
+    "main.css": "/Legends/static/css/main.535c66a0.css",
+    "main.js": "/Legends/static/js/main.84dcd012.js",
+    "static/js/787.49f0a139.chunk.js": "/Legends/static/js/787.49f0a139.chunk.js",
+    "static/media/background.svg": "/Legends/static/media/background.4ade972c73a3fb066e46.svg",
+    "static/media/legend-background.jpg": "/Legends/static/media/legend-background.142f7b22e60658a9adcf.jpg",
+    "static/media/tft_logo.jpg": "/Legends/static/media/tft_logo.93dcb05f5c50f942ad0d.jpg",
+    "index.html": "/Legends/index.html",
+    "main.535c66a0.css.map": "/Legends/static/css/main.535c66a0.css.map",
+    "main.84dcd012.js.map": "/Legends/static/js/main.84dcd012.js.map",
+    "787.49f0a139.chunk.js.map": "/Legends/static/js/787.49f0a139.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.7f0b869e.css",
-    "static/js/main.5e97501f.js"
+    "static/css/main.535c66a0.css",
+    "static/js/main.84dcd012.js"
   ]
 }
