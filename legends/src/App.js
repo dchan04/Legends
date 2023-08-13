@@ -10,12 +10,10 @@ export default function App() {
 	return (
 		<>
 			<Navbar />
-			<div>
-				<Routes>
-					<Route index path="/" element={<HomePage />} />
-					<Route path="/legends" element={<LegendTable />} />
-				</Routes>
-			</div>
+			<Routes>
+				<Route path="/" element={<HomePage />} />
+				<Route path="/legendstats" element={<LegendTable />} />
+			</Routes>
 			<Footer />
 		</>
 	);

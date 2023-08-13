@@ -172,7 +172,7 @@ function Home() {
 						</div>
 					</div>
 					<div id="view-all-button-container">
-						<Link to="/legends" id="view-all-button">
+						<Link to="/legendstats" id="view-all-button">
 							See More
 						</Link>
 					</div>
