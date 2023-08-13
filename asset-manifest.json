@@ -1,18 +1,18 @@
 {
   "files": {
     "main.css": "/Legends/static/css/main.535c66a0.css",
-    "main.js": "/Legends/static/js/main.4f24fb56.js",
+    "main.js": "/Legends/static/js/main.6afad606.js",
     "static/js/787.49f0a139.chunk.js": "/Legends/static/js/787.49f0a139.chunk.js",
     "static/media/background.svg": "/Legends/static/media/background.4ade972c73a3fb066e46.svg",
     "static/media/legend-background.jpg": "/Legends/static/media/legend-background.142f7b22e60658a9adcf.jpg",
     "static/media/tft_logo.jpg": "/Legends/static/media/tft_logo.93dcb05f5c50f942ad0d.jpg",
     "index.html": "/Legends/index.html",
     "main.535c66a0.css.map": "/Legends/static/css/main.535c66a0.css.map",
-    "main.4f24fb56.js.map": "/Legends/static/js/main.4f24fb56.js.map",
+    "main.6afad606.js.map": "/Legends/static/js/main.6afad606.js.map",
     "787.49f0a139.chunk.js.map": "/Legends/static/js/787.49f0a139.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.535c66a0.css",
-    "static/js/main.4f24fb56.js"
+    "static/js/main.6afad606.js"
   ]
 }
