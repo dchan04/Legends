@@ -2,6 +2,7 @@ import "./Home.css";
 import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
+import ContentLoader from "react-content-loader";
 //const port = 7150;
 const webAPI = `https://tftappbackend.onrender.com`;
 
@@ -92,6 +93,8 @@ function Top3Variants(props) {
 	);
 }
 function Home() {
+	const [speciesLoading, setSpeciesLoading] = useState(true);
+	const [variantsLoading, setVariantsLoading] = useState(true);
 	const [top3Species, setTop3Species] = useState([]);
 	const [top3Variants, setTop3Variants] = useState([]);
 
@@ -103,8 +106,9 @@ function Home() {
 			})
 				.then((Response) => Response.json())
 				.then((data) => {
-					console.log(data);
+					//console.log(data);
 					setTop3Species(data);
+					setSpeciesLoading(false);
 				})
 				.catch((error) => {
 					console.log(error);
@@ -121,8 +125,9 @@ function Home() {
 			})
 				.then((Response) => Response.json())
 				.then((data) => {
-					console.log(data);
+					//console.log(data);
 					setTop3Variants(data);
+					setVariantsLoading(false);
 				})
 				.catch((error) => {
 					console.log(error);
@@ -144,15 +149,115 @@ function Home() {
 							Top 3 <span id="species-title">Species</span>
 						</div>
 						<div className="top3-list">
-							<ol>
-								{top3Species &&
-									top3Species.map((speciesList) => (
-										<Top3Species
-											key={speciesList.speciesId}
-											species={speciesList}
-										/>
-									))}
-							</ol>
+							{speciesLoading ? (
+								// Placeholder loader while data is being fetched
+								<ContentLoader
+									speed={1}
+									width="auto"
+									height="100%"
+									backgroundColor="#dedede"
+									foregroundColor="#8c8c8c"
+								>
+									<rect
+										x="68"
+										y="11"
+										rx="6"
+										ry="6"
+										width="92"
+										height="65"
+									/>
+									<rect
+										x="15"
+										y="18"
+										rx="6"
+										ry="6"
+										width="29"
+										height="38"
+									/>
+									<rect
+										x="15"
+										y="91"
+										rx="6"
+										ry="6"
+										width="29"
+										height="38"
+									/>
+									<rect
+										x="15"
+										y="164"
+										rx="6"
+										ry="6"
+										width="29"
+										height="38"
+									/>
+									<rect
+										x="68"
+										y="88"
+										rx="6"
+										ry="6"
+										width="92"
+										height="65"
+									/>
+									<rect
+										x="68"
+										y="164"
+										rx="6"
+										ry="6"
+										width="92"
+										height="65"
+									/>
+									<rect
+										x="165"
+										y="12"
+										rx="6"
+										ry="6"
+										width="120"
+										height="25"
+									/>
+									<rect
+										x="165"
+										y="88"
+										rx="6"
+										ry="6"
+										width="120"
+										height="25"
+									/>
+									<rect
+										x="165"
+										y="164"
+										rx="6"
+										ry="6"
+										width="120"
+										height="25"
+									/>
+									<rect
+										x="165"
+										y="12"
+										rx="6"
+										ry="6"
+										width="120"
+										height="25"
+									/>
+									<rect
+										x="165"
+										y="92"
+										rx="6"
+										ry="6"
+										width="120"
+										height="25"
+									/>
+								</ContentLoader>
+							) : (
+								<>
+									{top3Species &&
+										top3Species.map((speciesList) => (
+											<Top3Species
+												key={speciesList.speciesId}
+												species={speciesList}
+											/>
+										))}
+								</>
+							)}
 						</div>
 					</div>
 					<div id="topVariant-container">
@@ -160,15 +265,115 @@ function Home() {
 							Top 3 <span id="variant-title">Variants</span>
 						</div>
 						<div className="top3-list">
-							<ol>
-								{top3Variants &&
-									top3Variants.map((variantList) => (
-										<Top3Variants
-											key={variantList.variantId}
-											variants={variantList}
-										/>
-									))}
-							</ol>
+							{variantsLoading ? (
+								// Placeholder loader while data is being fetched
+								<ContentLoader
+									speed={1}
+									width="auto"
+									height="100%"
+									backgroundColor="#dedede"
+									foregroundColor="#8c8c8c"
+								>
+									<rect
+										x="68"
+										y="11"
+										rx="6"
+										ry="6"
+										width="92"
+										height="65"
+									/>
+									<rect
+										x="15"
+										y="18"
+										rx="6"
+										ry="6"
+										width="29"
+										height="38"
+									/>
+									<rect
+										x="15"
+										y="91"
+										rx="6"
+										ry="6"
+										width="29"
+										height="38"
+									/>
+									<rect
+										x="15"
+										y="164"
+										rx="6"
+										ry="6"
+										width="29"
+										height="38"
+									/>
+									<rect
+										x="68"
+										y="88"
+										rx="6"
+										ry="6"
+										width="92"
+										height="65"
+									/>
+									<rect
+										x="68"
+										y="164"
+										rx="6"
+										ry="6"
+										width="92"
+										height="65"
+									/>
+									<rect
+										x="165"
+										y="12"
+										rx="6"
+										ry="6"
+										width="120"
+										height="25"
+									/>
+									<rect
+										x="165"
+										y="88"
+										rx="6"
+										ry="6"
+										width="120"
+										height="25"
+									/>
+									<rect
+										x="165"
+										y="164"
+										rx="6"
+										ry="6"
+										width="120"
+										height="25"
+									/>
+									<rect
+										x="165"
+										y="12"
+										rx="6"
+										ry="6"
+										width="120"
+										height="25"
+									/>
+									<rect
+										x="165"
+										y="92"
+										rx="6"
+										ry="6"
+										width="120"
+										height="25"
+									/>
+								</ContentLoader>
+							) : (
+								<>
+									{top3Variants &&
+										top3Variants.map((variantList) => (
+											<Top3Variants
+												key={variantList.variantId}
+												variants={variantList}
+											/>
+										))}
+								</>
+							)}
 						</div>
 					</div>
 					<div id="view-all-button-container">

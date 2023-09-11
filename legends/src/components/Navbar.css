@@ -1,64 +1,63 @@
 .navbar {
-  background-color: #23182c;
-  position: fixed;
-  width: 100%;
-  height: 52px;
-  padding: 0px 0px 0px 0px;
-  justify-content: baseline;
-  align-items: center;
-  z-index: 1;
-  opacity: 0.95;
+	background-image: linear-gradient(
+		to right,
+		#434343 0%,
+		rgba(0, 0, 0, 0.753) 100%
+	);
+	position: fixed;
+	width: 100%;
+	height: 52px;
+	padding: 0px 0px 0px 0px;
+	justify-content: baseline;
+	align-items: center;
+	z-index: 1;
+	opacity: 0.95;
 }
 
 .navbar ul {
-  display: flex;
-  height: 100%;
-  padding: 0px 5px 0px 0px;
-  list-style-type: none;
+	display: flex;
+	height: 100%;
+	padding: 0px 5px 0px 0px;
+	list-style-type: none;
 }
 
 .navbar li {
-  white-space: nowrap;
-  list-style: none;
-  margin: auto;
-  border-radius: 20px;
+	white-space: nowrap;
+	list-style: none;
+	margin: auto;
+	border-radius: 20px;
 }
 
 .navbar a {
-  text-decoration: none;
-  display: block;
-  font-weight: 600;
-  font-size: 1rem;
-  color: white;
-  height: 100%;
-  padding: 10px 20px;
-  border-radius: 10px;
-  transition: 0.25s ease;
+	text-decoration: none;
+	display: block;
+	font-weight: 600;
+	font-size: 1rem;
+	color: white;
+	height: 100%;
+	padding: 10px 30px;
+	border-radius: 10px;
+	transition: 0.25s ease;
 }
 .navbar a:hover {
-  background: white;
-  color: #23182c;
-}
-
-.navbar .img-Logo {
-  background-image: url("./assets/tft_logo.jpg");
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
-  height: 50px;
-  width: 125px;
-  margin-left: 10px;
-  z-index: 2;
+	background: white;
+	color: #23182c;
 }
 
 .logo-container {
-  display: flex;
-  padding: 0px 10px;
-  height: 100%;
+	display: flex;
+	padding: auto;
+	height: 100%;
+}
+
+.logo-container img {
+	display: block;
+	padding: 10px 10px;
+	height: 100%;
 }
 
 .logo-name {
-  font-size: 1.6rem;
-  font-weight: 600;
-  padding: 5px 10px;
+	font-size: 1.5rem;
+	font-weight: 600;
+	padding: 5px 10px;
 }

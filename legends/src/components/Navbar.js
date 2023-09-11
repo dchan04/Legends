@@ -1,20 +1,13 @@
 import "./Navbar.css";
-import { AppBar, Typography, List } from "@mui/material";
+import { AppBar, List } from "@mui/material";
 import { Link, useMatch, useResolvedPath } from "react-router-dom";
-
+import logoImg from "./assets/websitelogo.png";
 export default function Navbar() {
 	return (
 		<AppBar position="static">
 			<div className="navbar">
 				<div className="logo-container">
-					<Typography
-						className="logo-name"
-						component="div"
-						fontWeight={600}
-					>
-						Legends - Set 8.5 x
-					</Typography>
-					<div className="img-Logo" />
+					<img src={logoImg} alt="Website logo"></img>
 				</div>
 				<List dense={true}>
 					<CustomLink to="/">Home</CustomLink>

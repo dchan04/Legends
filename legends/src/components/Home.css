@@ -2,7 +2,7 @@
 	padding-top: 52px;
 	width: 100vw;
 	height: 100vh;
-	background-image: url("./assets/background.svg");
+	background-image: url("./assets/background1.svg");
 	background-position: center;
 	background-repeat: no-repeat;
 	background-size: cover;
@@ -17,10 +17,15 @@
 
 .middle-content {
 	position: absolute;
-	top: 22%;
+	background-image: linear-gradient(
+		to right,
+		#434343 0%,
+		rgba(0, 0, 0, 0.753) 100%
+	);
+	top: 25%;
 	left: 25%;
 	height: 60vh;
-	width: 50vw;
+	width: 50%;
 }
 
 .title {
@@ -162,6 +167,7 @@
 	height: 28%;
 	margin: 5px;
 	padding: 1px;
+	list-style: none;
 }
 
 .top3-list li img {
