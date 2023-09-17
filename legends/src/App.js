@@ -11,7 +11,7 @@ export default function App() {
 		<>
 			<Navbar />
 			<Routes>
-				<Route path="/" element={<HomePage />} />
+				<Route path="/Legends" element={<HomePage />} />
 				<Route path="/legendstats" element={<LegendTable />} />
 			</Routes>
 			<Footer />

@@ -10,7 +10,7 @@ export default function Navbar() {
 					<img src={logoImg} alt="Website logo"></img>
 				</div>
 				<List dense={true}>
-					<CustomLink to="/">Home</CustomLink>
+					<CustomLink to="/Legends">Home</CustomLink>
 					<CustomLink to="/legendstats">Little Legends</CustomLink>
 				</List>
 			</div>
